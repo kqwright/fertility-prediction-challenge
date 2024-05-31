@@ -1,6 +1,4 @@
 
-
-
 #install.packages(c("dplyr","data.table","tidyr"), repos="https://cran.r-project.org")
 #library(c("dplyr","data.table","tidyr"))
 
@@ -137,7 +135,7 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cr20m041) & (df$cr20m041==6) ,]$relig <- "1_never"
   
   # Generate personality
-  df[is.na(df$cp20l026),]$cp20l026 <- "999"
+  #df[is.na(df$cp20l026),]$cp20l026 <- "999"
   df[is.na(df$cp20l023),]$cp20l023 <- "999"
   df$personality <- "NA"
   df[(df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
