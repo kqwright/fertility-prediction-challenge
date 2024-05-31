@@ -1,9 +1,8 @@
 
 
-#install.packages(c("dplyr","data.table","tidyr", "read.csv", "glm", "predict", "as.table", "merge", "total", "c", "ifelse"), repos="https://cran.r-project.org")
 
+#install.packages(c("dplyr","data.table","tidyr"), repos="https://cran.r-project.org")
 
-#library(c("dplyr","data.table","tidyr", "read.csv", "glm", "predict", "as.table", "merge", "total", "c", "ifelse"))
 
 #library(data.table) 
 
