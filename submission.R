@@ -328,8 +328,6 @@ predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds
 }
 
 
-# apply the function to the fake data
-predict_outcomes(fake)
 
 ###################################
 
