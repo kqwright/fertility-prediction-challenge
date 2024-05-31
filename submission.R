@@ -2,7 +2,7 @@
 
 
 #install.packages(c("dplyr","data.table","tidyr"), repos="https://cran.r-project.org")
-library(c("dplyr","data.table","tidyr"))
+#library(c("dplyr","data.table","tidyr"))
 
 #library(data.table) 
 
