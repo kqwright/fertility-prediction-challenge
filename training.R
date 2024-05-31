@@ -1,3 +1,5 @@
+
+#setwd("Z:/PreFer/") 
 ###################################################################################
 
 train_save_model <- function(cleaned_df, outcome_df) {
@@ -20,5 +22,15 @@ train_save_model <- function(cleaned_df, outcome_df) {
   saveRDS(model, "model.rds")
 }
 
+
+#############################################################################
+
+
+#setwd("Z:/PreFer/") 
+
+train_cleaned <- clean_df(train)
+
+# training and saving the model
+train_save_model(train_cleaned, outcome)
 
 #############################################################################

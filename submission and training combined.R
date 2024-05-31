@@ -1,11 +1,10 @@
 
-
-#install.packages(c("dplyr","data.table","tidyr", "read.csv", "glm", "predict", "as.table", "merge", "total", "c", "ifelse"), repos="https://cran.r-project.org")
+install.packages(c("dplyr","data.table","tidyr", "read.csv", "glm", "predict", "as.table", "merge", "total", "c", "ifelse"), repos="https://cran.r-project.org")
 
 
 #library(c("dplyr","data.table","tidyr", "read.csv", "glm", "predict", "as.table", "merge", "total", "c", "ifelse"))
 
-#library(data.table) 
+library(data.table) 
 
 
 #overall steps:
@@ -21,12 +20,12 @@
 #                   header=TRUE,sep=",")
 
 
-#train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
-  #                         keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-   #                        data.table = FALSE)
+train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
+                           keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
+                           data.table = FALSE)
 
-#outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
-    #                         data.table = FALSE) 
+outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
+                             data.table = FALSE) 
 
 
 #2. Preprocess data
@@ -238,7 +237,7 @@ clean_df <- function(df, background_df = NULL) {
 
 #####################
 
-#train_save_model <- function(cleaned_df, outcome_df) {
+train_save_model <- function(cleaned_df, outcome_df) {
   # Trains a model using the cleaned dataframe and saves the model to a file.
   
   # Parameters:
@@ -246,36 +245,36 @@ clean_df <- function(df, background_df = NULL) {
   # outcome_df (dataframe): The data with the outcome variable (e.g., from PreFer_train_outcome.csv or PreFer_fake_outcome.csv).
   
   ## This script contains a bare minimum working example
- # set.seed(1) # not useful here because logistic regression deterministic
+  set.seed(1) # not useful here because logistic regression deterministic
   
   # Combine cleaned_df and outcome_df
-  #model_df <- merge(cleaned_df, outcome_df, by = "nomem_encr")
+  model_df <- merge(cleaned_df, outcome_df, by = "nomem_encr")
   
   # Logistic regression model
-  #model <- glm(new_child ~ gender_bg*(age+migration+education+occupation+satisfied_own_finance+owner+income+rela_satisfied+health+relig+personality+urban+help_fr_parents+next_child+first_birth+partner_dur+marriage_dur+field_edu), family = "binomial", data = model_df) 
+  model <- glm(new_child ~ gender_bg*(age+migration+education+occupation+satisfied_own_finance+owner+income+rela_satisfied+health+relig+personality+urban+help_fr_parents+next_child+first_birth+partner_dur+marriage_dur+field_edu), family = "binomial", data = model_df) 
   
   # Save the model
-  #saveRDS(model, "model.rds")
-#}
+  saveRDS(model, "model.rds")
+}
 
 
 ###############
 
-#setwd("Z:/PreFer/") 
+setwd("Z:/PreFer/") 
 
-#train_cleaned <- clean_df(train)
+train_cleaned <- clean_df(train)
 
 # training and saving the model
-#train_save_model(train_cleaned, outcome)
+train_save_model(train_cleaned, outcome)
 
 
 ###############################
-#setwd("Z:/PreFer/other_data/") 
+setwd("Z:/PreFer/other_data/") 
 
 
-#fake <- data.table::fread("PreFer_fake_data.csv",
-#                          keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-#                          data.table = FALSE)
+fake <- data.table::fread("PreFer_fake_data.csv",
+                          keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
+                          data.table = FALSE)
 
 predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds"){
   # Generate predictions using the saved model and the input dataframe.
