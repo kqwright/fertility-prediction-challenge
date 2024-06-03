@@ -1,8 +1,10 @@
 
-#install.packages(c("dplyr","data.table","tidyr"), repos="https://cran.r-project.org")
-#library(c("dplyr","data.table","tidyr"))
 
-#library(data.table) 
+
+#install.packages(c("dplyr","data.table","tidyr"), repos="https://cran.r-project.org")
+
+
+library(data.table) 
 
 
 #overall steps:
@@ -17,13 +19,12 @@
 #outcome = read.csv('Z:/PreFer/training_data/PreFer_train_outcome.csv', 
 #                   header=TRUE,sep=",")
 
+train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
+                          keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
+                          data.table = FALSE)
 
-#train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
-  #                         keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-   #                        data.table = FALSE)
-
-#outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
-    #                         data.table = FALSE) 
+outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
+                            data.table = FALSE) 
 
 
 #2. Preprocess data
@@ -138,10 +139,10 @@ clean_df <- function(df, background_df = NULL) {
   #df[is.na(df$cp20l026),]$cp20l026 <- "999"
   #df[is.na(df$cp20l023),]$cp20l023 <- "999"
   df$personality <- "NA"
-  df[(df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
-  df[(df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "more_social_less_stressed"
-  df[(df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "less_social_more_stressed"
-  df[(df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "more_social_less_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "less_social_more_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
   
   # Generate living arrangement
   df$urban <- "6_NA"
@@ -326,6 +327,8 @@ predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds
 }
 
 
+# apply the function to the fake data
+predict_outcomes(fake)
 
 ###################################
 
