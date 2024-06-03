@@ -19,12 +19,12 @@ library(data.table)
 #outcome = read.csv('Z:/PreFer/training_data/PreFer_train_outcome.csv', 
 #                   header=TRUE,sep=",")
 
-train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
-                          keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-                          data.table = FALSE)
+#train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
+ #                         keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
+  #                        data.table = FALSE)
 
-outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
-                            data.table = FALSE) 
+#outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
+ #                           data.table = FALSE) 
 
 
 #2. Preprocess data
