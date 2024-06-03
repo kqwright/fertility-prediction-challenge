@@ -1,5 +1,5 @@
-# Description of June 3 submission for FinNextBaby team
-We are a group of fertility experts who wanted to provide a model with independent variables driven by established theory that should be able to predict future childbirth without machine learning. We included predictors that reflect demographic, economic, social, and psychological factors shown to be important for childbearing in the literature, particularly in the near future. The model includes interactions between gender and all other predictors in the model. This was motivated because a) theoretically, many variables tend to have different relationships with fertility for women and men, and b) it improved the predictive accuracy of the model. In a different situation, we may have provided stratified models, however the predictive goal of this exercise determined the interaction route.
+# Description of June 3 submission for NextFinBaby team
+We are a group of fertility experts who wanted to provide a model with predictors driven by theoretical relevance. We included predictors that reflect demographic, economic, social, and psychological factors shown to be important for childbearing in the literature, particularly in the near future. The model includes interactions between gender and all other predictors in the model. These interactions were motivated because a) theoretically, many variables tend to have different relationships with fertility for women and men, and b) it improved the predictive accuracy of the model. 
 
 A binary logistic regression was run on the outcome variable ‘new_child’ (0,1) with the following, manually selected 19 predictors:
 -	Gender (male; female)
@@ -21,6 +21,7 @@ A binary logistic regression was run on the outcome variable ‘new_child’ (0,
 -	Personality “Am interested in people“ & “Get stressed out easily” (less_social_less_stressed; less_social_more_stressed; more_social_less_stressed; more_social_more_stressed; missing)
 -	Subjective health “How would you describe your health, generally speaking?” (poor_moderate; good; very_good; excellent; missing)
 -	Fertility intentions “Within how many years do you hope to have your [first/next] child?” & “Do you think you will have [more] children in the future?” (<1_year; 2_3_year; >4_year; no (more) children; missing)
+
 
 
 
