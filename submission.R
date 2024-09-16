@@ -15,18 +15,18 @@ library(stats)
 #b. strongly advised to save datafiles separate from local repository so they are not accidently made public through a push function to GitHub
 #c. The code to read-in your data is the only code you don't need to document through your repository
 
-data = read.csv('Z:/PreFer/training_data/PreFer_train_data.csv', 
-                 header=TRUE,sep=",")
+#data = read.csv('Z:/PreFer/training_data/PreFer_train_data.csv', 
+ #                header=TRUE,sep=",")
 
-outcome = read.csv('Z:/PreFer/training_data/PreFer_train_outcome.csv', 
-                   header=TRUE,sep=",")
+#outcome = read.csv('Z:/PreFer/training_data/PreFer_train_outcome.csv', 
+ #                  header=TRUE,sep=",")
 
 #outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
 #                           data.table = FALSE) 
 
-train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
-                         keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-                         data.table = FALSE)
+#train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
+ #                        keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
+  #                       data.table = FALSE)
 
 
 #2. Preprocess data
