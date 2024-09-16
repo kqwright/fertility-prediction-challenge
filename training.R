@@ -1,7 +1,4 @@
 
-
-#####################
-
 train_save_model <- function(cleaned_df, outcome_df) {
   # Trains a model using the cleaned dataframe and saves the model to a file.
   
@@ -23,14 +20,7 @@ train_save_model <- function(cleaned_df, outcome_df) {
 }
 
 
-###############
-
-setwd("Z:/PreFer/") 
-
 train_cleaned <- clean_df(train)
 
 # training and saving the model
 train_save_model(train_cleaned, outcome)
-
-
-###############################
