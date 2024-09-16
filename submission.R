@@ -145,7 +145,14 @@ clean_df <- function(df, background_df = NULL) {
   df$dist_fr_parents <- "NA"
   df$dist_fr_parents <- df$cf20m398
   df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
-  
+
+
+
+
+  Output will be saved to: /data/predictions.csv 
+Error in `$<-.data.frame`(`*tmp*`, "next_child", value = "Wants more, unknown time frame") : 
+  replacement has 1 row, data has 0
+Calls: main ... predict_outcomes -> clean_df -> $<- -> $<-.data.frame
   
   # Generate fertility intentions 
   #128: Do you think you will have [more] children in the future? yes, no, i don't know
@@ -157,7 +164,7 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m130<=1,]$next_child <- "<1_year"
   df[df$cf20m130>=2 & df$cf20m130<=3,]$next_child <- "2_3_year"
   df[df$cf20m130>=4,]$next_child <- ">4_year"
-  df[df$cf20m128==3 & df$cf20m130==999,]$next_child <- "Wants more, unknown time frame"
+  df[df$cf20m128=3 & df$cf20m130==999,]$next_child <- "Wants more, unknown time frame"
   df[df$cf20m130==999,]$next_child <- "missing"
   df[df$cf20m128==2,]$next_child <- "no"
   
