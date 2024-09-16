@@ -50,7 +50,7 @@ clean_df <- function(df, background_df = NULL) {
   df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
   df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_senior"
   df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
-  df[df$oplmet_2020==999 | is.na(df$oplcat_2020),]$education <- "other_missing"
+  df[df$oplcat_2020==999 | is.na(df$oplcat_2020),]$education <- "other_missing"
   
 # Get education field
   df$field_edu <- NA
