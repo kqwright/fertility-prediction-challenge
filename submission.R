@@ -157,7 +157,6 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m130<=1,]$next_child <- "<1_year"
   df[df$cf20m130>=2 & df$cf20m130<=3,]$next_child <- "2_3_year"
   df[df$cf20m130>=4,]$next_child <- ">4_year"
-  df[df$cf20m128==3 & df$cf20m130==999,]$next_child <- "Wants more, unknown time frame"
   df[df$cf20m130==999,]$next_child <- "missing"
   df[df$cf20m128==2,]$next_child <- "no"
   
