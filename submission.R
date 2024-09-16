@@ -74,7 +74,7 @@ clean_df <- function(df, background_df = NULL) {
   
   
   #Get employment
-   df[is.na(df$ci20m383),]$ci20m383 <- 999 
+  df$ci20m383[is.na(df$ci20m383 )] <- 999
   df$occupation <- NA
   df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation <- "employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation <- "self-employed"
