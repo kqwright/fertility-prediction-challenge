@@ -1,10 +1,12 @@
 
 
 
-#install.packages(c("dplyr","data.table","tidyr"), repos="https://cran.r-project.org")
+install.packages(c("dplyr","data.table","tidyr", "stats"), repos="https://cran.r-project.org")
 
 
-library(data.table) 
+library(data.table)
+library(data.table)
+library(stats)
 
 
 #overall steps:
@@ -13,25 +15,25 @@ library(data.table)
 #b. strongly advised to save datafiles separate from local repository so they are not accidently made public through a push function to GitHub
 #c. The code to read-in your data is the only code you don't need to document through your repository
 
-#data = read.csv('Z:/PreFer/training_data/PreFer_train_data.csv', 
-#                header=TRUE,sep=",")
+data = read.csv('Z:/PreFer/training_data/PreFer_train_data.csv', 
+                 header=TRUE,sep=",")
 
-#outcome = read.csv('Z:/PreFer/training_data/PreFer_train_outcome.csv', 
-#                   header=TRUE,sep=",")
-
-#train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
- #                         keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-  #                        data.table = FALSE)
+outcome = read.csv('Z:/PreFer/training_data/PreFer_train_outcome.csv', 
+                   header=TRUE,sep=",")
 
 #outcome <- data.table::fread("Z:/PreFer/training_data/PreFer_train_outcome.csv",
- #                           data.table = FALSE) 
+#                           data.table = FALSE) 
+
+train <- data.table::fread("Z:/PreFer/training_data/PreFer_train_data.csv",
+                         keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
+                         data.table = FALSE)
 
 
 #2. Preprocess data
-# total <- merge(data,outcome,by="nomem_encr")
-#total <- total[total$outcome_available==1,]
-#myvars <- c("nomem_encr", "new_child","gender_bg","migration_background_bg","age_bg","partner_2020","cf20m128")
-#newdata <- total[myvars]
+total <- merge(data,outcome,by="nomem_encr")
+total <- total[total$outcome_available==1,]
+myvars <- c("nomem_encr", "new_child","gender_bg","migration_background_bg","age_bg","partner_2020","cf20m128", "oplmet_2020", "cr20m041", "cr20m042", "ch20m004", "ch20m219", "sted_2020", "nettohh_f_2020", "cw20m011", "cw20m012", "cw20m013", "cw20m014", "cw20m015", "cw20m016", "cw20m017", "cw20m018", "cw20m019", "cw20m020", "cw20m021", "cw20m022", "cw20m023", "cw20m024", "cw20m025", "cw20m026", "cw20m027", "ci20m383", "cf20m180", "cf20m166", "cf20m031", "ci20m006", "cd20m003", "cf18k184", "cp20l029", "cp20l030", "cp20l031", "cp20l032", "cp20l033", "cp20l034", "cp20l035", "cp20l036", "cp20l037", "cp20l038", "cp20l039", "cp20l040", "cp20l041", "cp20l042", "cp20l043", "cp20l044", "cp20l045", "cp20l046", "cp20l047", "cp20l048", "cp20l049", "cp20l050", "cp20l051", "cp20l052", "cp20l053", "cp20l054", "cp20l055", "cp20l056", "cp20l057", "cp20l058", "cp20l059", "cp20l060", "cp20l061", "cp20l062", "cp20l063", "cp20l064", "cp20l065", "cp20l066", "cp20l067", "cp20l068", "cp20l069")
+newdata <- total[myvars]
 
 
 clean_df <- function(df, background_df = NULL) {
@@ -50,126 +52,176 @@ clean_df <- function(df, background_df = NULL) {
   
   # Migration as a categorical variable
   df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-  df$migration <- "NA"
+  df$migration <- NA
   df[df$migration_background_bg==0,]$migration <- "Dutch"
   df[df$migration_background_bg==101,]$migration <- "gen_1_west"
   df[df$migration_background_bg==102,]$migration <- "gen_1_non_west"
   df[df$migration_background_bg==201,]$migration <- "gen_2_west"
   df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
   
-  # Get education level
+#Get education level
+  df$oplcat_2020 [is.na(df$oplcat_2020 )] <- 999 
   df$education <- NA
-  df[(df$oplmet_2020==1 | df$oplmet_2020==8 | df$oplmet_2020==9) & !is.na(df$oplmet_2020),]$education <- "1_prim_8_9"
-  df[df$oplmet_2020==2 & !is.na(df$oplmet_2020),]$education <- "2_sec_intermed"
-  df[df$oplmet_2020==3 & !is.na(df$oplmet_2020),]$education <- "3_sec_high"
-  df[df$oplmet_2020==4 & !is.na(df$oplmet_2020),]$education <- "4_voc_intermed"
-  df[df$oplmet_2020==5 & !is.na(df$oplmet_2020),]$education <- "5_voc_high"
-  df[df$oplmet_2020==6 & !is.na(df$oplmet_2020),]$education <- "6_uni"
-  df[df$oplmet_2020==7 | is.na(df$oplmet_2020),]$education <- "7_other_missing"
+  df[df$oplcat_2020==1 & !is.na(df$oplmet_2020),]$education <- "1_primary"
+  df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
+  df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education <- "3_sec_senior"
+  df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
+  df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_senior"
+  df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
+  df[df$oplmet_2020==999 | is.na(df$oplmet_2020),]$education <- "other_missing"
   
-  # Get education field
-  df$field_edu <- "NA"
-  df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu <- "general"
+# Get education field
+  df$field_edu <- NA
+  df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu <- "other"
   df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu <- "teaching"
-  df[!is.na(df$cw20m013) & (df$cw20m013==1),]$field_edu <- "art_humanities"
-  df[!is.na(df$cw20m014) & (df$cw20m014==1),]$field_edu <- "art_humanities"
-  df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu <- "social"
-  df[!is.na(df$cw20m016) & df$cw20m016==1,]$field_edu <- "economics"
-  df[!is.na(df$cw20m017) & df$cw20m017==1,]$field_edu <- "law"
-  df[!is.na(df$cw20m018) & df$cw20m018==1,]$field_edu <- "math"
-  df[!is.na(df$cw20m019) & (df$cw20m019==1),]$field_edu <- "technology_agri"
-  df[!is.na(df$cw20m020) & (df$cw20m020==1),]$field_edu <- "technology_agri"
-  df[!is.na(df$cw20m025) & (df$cw20m025==1),]$field_edu <- "technology_agri"
+  df[!is.na(df$cw20m013) & df$cw20m013==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m014) & df$cw20m014==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m016) & df$cw20m016==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m017) & df$cw20m017==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m018) & df$cw20m018==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m019) & df$cw20m019==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m020) & df$cw20m020==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m025) & df$cw20m025==1,]$field_edu <- "other"
   df[!is.na(df$cw20m021) & df$cw20m021==1,]$field_edu <- "1_health"
-  df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu <- "personal_care"
-  df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu <- "catering"
-  df[!is.na(df$cw20m024) & (df$cw20m024==1),]$field_edu <- "transport_public_order"
-  df[!is.na(df$cw20m026) & (df$cw20m026==1),]$field_edu <- "transport_public_order"
+  df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m024) & df$cw20m024==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m026) & df$cw20m026==1,]$field_edu <- "other"
   df[!is.na(df$cw20m027) & df$cw20m027==1,]$field_edu <- "other"
   
-  # Get occupation
-  df$occupation <- "NA"
+  
+  #Get employment
+  df$ci20m383 [is.na(df$ci20m383 )] <- 999 
+  df$occupation <- NA
   df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation <- "employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation <- "self-employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation <- "student"
   df[!is.na(df$ci20m383) & (df$ci20m383==4 | df$ci20m383==5  | df$ci20m383==6 |df$ci20m383==8 |  df$ci20m383==9 | df$ci20m383==10 | df$ci20m383==11 | df$ci20m383==12 | df$ci20m383==13),]$occupation <- "not_employed"
+  df[!is.na(df$ci20m383) & (df$ci20m383==999),]$occupation <- "missing"
   
-  # Get income, imput missing values with mean income
+  
+  # Get income, input missing values with mean income
   df$income <- df$nettohh_f_2020
   df[is.na(df$nettohh_f_2020),]$income <-  mean(df$nettohh_f_2020, na.rm=TRUE)
+  df$income_log <- df$log(income)
+  
+  
+  # Urban
+  df$sted_2020 [is.na(df$sted_2020 )] <- 999  
+  df$urban <- "NA"
+  df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extremely urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==2,]$urban <- "2_very urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==3,]$urban <- "3_moderately urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slightly urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_slightly urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==999,]$urban <- "missing"
+  
+  #GENERATE URBAN DELTA 
+  df$urban_delta <- 0
+  df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
   
   # Add how satisfied individuals are with their finances
-  df$satisfied_own_finance <- "NA"
-  df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
+  df$ci20m006 [is.na(df$ci20m006 )] <- 999 
+   df$satisfied_own_finance <- "NA"
+   df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
+   df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
+   df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
+   df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
+   df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
+   df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
+   df[!is.na(df$ci20m006) & df$ci20m006==999,]$satisfied_own_finance <- "missing"
+   
+   # Add whether the respondent is an owner of its current dwelling
+   df$cd20m003 [is.na(df$cd20m003 )] <- 999 
+    df$owner <- "NA"
+   df[!is.na(df$cd20m003) & (df$cd20m003==1 |df$cd20m003==2 | df$cd20m003==4),]$owner <- "1_no"
+   df[!is.na(df$cd20m003) & df$cd20m003==3,]$owner <- "2_yes"
+   df[!is.na(df$cd20m003) & df$cd20m003==999,]$owner <- "missing"
   
-  # Add whether the respondent is an owner of its current dwelling
-  df$owner <- "NA"
-  df[!is.na(df$cd20m003) & (df$cd20m003==1 |df$cd20m003==2 | df$cd20m003==4),]$owner <- "1_no"
-  df[!is.na(df$cd20m003) & df$cd20m003==3,]$owner <- "2_yes"
-  
-  # Generate relationship satisfaction
-  df$rela_satisfied <- "8_NA"
-  df[!is.na(df$cf20m166) & df$cf20m166<=4,]$rela_satisfied <- "7_single_dissatisfied"
-  df[!is.na(df$cf20m166) & df$cf20m166>=5 & df$cf20m166<=7,]$rela_satisfied <- "6_single_neutral"
-  df[!is.na(df$cf20m166) & df$cf20m166>=8,]$rela_satisfied <- "4_single_very_satisfied"
-  df[!is.na(df$cf20m180) & df$cf20m180<=6,]$rela_satisfied <- "3_relation_less_satisfied"
-  df[!is.na(df$cf20m180) & df$cf20m180>=7 & df$cf20m180<=8,]$rela_satisfied <- "2_relation_satisfied"
-  df[!is.na(df$cf20m180) & df$cf20m180>=9,]$rela_satisfied <- "1_relation_very_satisfied"
-  
+
   # Generate health
+  df$ch20m004 [is.na(df$ch20m004 )] <- 999
   df$health <- "NA"
   df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
   df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
   df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
   df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
+  df[!is.na(df$ch20m004) & df$ch20m004==999,]$health <- "missing"
   
-  # Generate religiousness
-  df$relig <- "5_NA"
-  df[!is.na(df$cr20m041) & (df$cr20m041==1 | df$cr20m041==2 | df$cr20m041==3) ,]$relig <- "4_>once_week"
-  df[!is.na(df$cr20m041) & (df$cr20m041==4) ,]$relig <- ">3_once_month"
-  df[!is.na(df$cr20m041) & (df$cr20m041==5) ,]$relig <- ">2_few_per_year"
-  df[!is.na(df$cr20m041) & (df$cr20m041==6) ,]$relig <- "1_never"
+  df$ch20m004 [is.na(df$ch20m219 )] <- 999  
+  df$gyno <- "NA"
+  df[!is.na(df$ch20m219) & df$ch20m219==0,]$gyno <- "0_no"
+  df[!is.na(df$ch20m219) & df$ch20m219==1,]$gyno <- "1_yes"
+  df[!is.na(df$ch20m219) & df$ch20m219==999,]$gyno <- "missing"
   
-  # Generate personality
-  #df[is.na(df$cp20l026),]$cp20l026 <- "999"
-  #df[is.na(df$cp20l023),]$cp20l023 <- "999"
-  df$personality <- "NA"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "more_social_less_stressed"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "less_social_more_stressed"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
   
-  # Generate living arrangement
-  df$urban <- "6_NA"
-  df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extreme_urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==2,]$urban <- "2_very_urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==3,]$urban <- "3_mod_urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slight_urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_not_urban"
+  
+
+  # Generate religiousness factor
+  relig_df = subset(train, select = c(cr20m041, cr20m042))
+  na.omit(relig_df)
+  relig_df <- subset(relig_df, 
+                     !(is.na(cr20m041) |
+                         is.na(cr20m042) )
+                                 )
+  
+  data_relig <- factanal(relig_df, factors = 1, scores="regression")
+  relig_fa<-data_relig$loadings
+  relig_fa2 <-data_relig$scores
+
+  
+  
+  #how to make data frame with 4 variables: cs20m267 cs20m277 cs20m280 cs20m281 to generate factor? 
+  # Generate social media
+  sm_df = subset(train, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
+  na.omit(sm_df)
+  sm_df <- subset(sm_df, 
+                     !(is.na(cs20m267) |
+                         is.na(cs20m277) |
+                         is.na(cs20m280) |
+                         is.na(cs20m281) )
+  )
+  
+  data_sm <- factanal(sm_df, factors = 1, scores="regression")
+  sm_fa<-sm_df$loadings
+  sm_fa2 <-sm_df$scores
+
   
   # Generate help from parents
-  df[is.na(df$cf20m134),]$cf20m134 <- "999"
-  df[is.na(df$cf20m133),]$cf20m133 <- "999"
-  df$help_fr_parents <- "NA"
-  df[(df$cf20m134==3 | df$cf20m133==3),]$help_fr_parents <- "several_times"
-  df[(df$cf20m134==2 | df$cf20m133==2) & (df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "once_twice"
-  df[(df$cf20m134==1 | df$cf20m133==1) & (df$cf20m134!=2 & df$cf20m133!=2 & df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "never"
+  df$cf20m398[is.na(df$cf20m398 )] <- 999
+  df$dist_fr_parents <- "NA"
+  df$dist_fr_parents <- df$cf20m398
+  df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
+  
   
   # Generate fertility intentions 
+  ##JULIA HELP in cf20m130 one of the values is coded as 2025, should be 3, how to change?
+  #128: Do you think you will have [more] children in the future? yes, no, i don't know
+  #129: How many [more] children do you think you will have in the future? continuous
+  #130: Within how many years do you hope to have your [first/next] child?
+  
+  df[df$cf20m13==2025,]$cf20m13 <-5
   df$cf20m130[is.na(df$cf20m130)] <- 999
   df$cf20m128[is.na(df$cf20m128)] <- 999
   df$next_child <- "NA"
   df[df$cf20m130<=1,]$next_child <- "<1_year"
   df[df$cf20m130>=2 & df$cf20m130<=3,]$next_child <- "2_3_year"
   df[df$cf20m130>=4,]$next_child <- ">4_year"
-  df[df$cf20m130==999,]$next_child <- "NA"
+  df[df$cf20m128==3 & df$cf20m130==999,]$next_child <- "Wants more, unknown time frame"
+  df[df$cf20m130==999,]$next_child <- "missing"
   df[df$cf20m128==2,]$next_child <- "no"
   
+  
+  #Number of desired children
+  df$cf20m129[is.na(df$cf20m129)] <- 999
+  df$numb_child <- "NA"
+  df[!is.na(df$cf20m129) & df$cf20m129==1,]$numb_child <- "1"
+  df[!is.na(df$cf20m129) & df$cf20m129==2,]$numb_child <- "2"
+  df[!is.na(df$cf20m129) & df$cf20m129>=3,]$numb_child <- "3 or more"
+  df[!is.na(df$cf20m129) & df$cf20m129==999,]$numb_child <- "missing"
+  
+   
   # First birth
   df$cf20m456[is.na(df$cf20m456)] <- 999
   df$cf20m454[is.na(df$cf20m454)] <- 999
@@ -182,15 +234,6 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m456==999,]$first_birth <- "NA"
   df[df$cf20m454==2,]$first_birth <- "no_children"
   
-  # Generate partner duration
-  df$cf20m029[is.na(df$cf20m029)] <- 999
-  df$partner_dur <- "NA"
-  df[df$cf20m029>=2018 & df$cf20m029<=2020,]$partner_dur <- "2018_2020"
-  df[df$cf20m029>=2015 & df$cf20m029<=2017,]$partner_dur <- "2015_2017"
-  df[df$cf20m029>=2011 & df$cf20m029<=2014,]$partner_dur <- "2011_2014"
-  df[df$cf20m029>=2006 & df$cf20m029<=2010,]$partner_dur <- "2006_2010"
-  df[df$cf20m029<=2005,]$partner_dur <- "_2005"
-  df[df$cf20m029==999,]$partner_dur <- "NA"
   
   # Generate marriage duration
   df$cf20m031[is.na(df$cf20m031)] <- 999
@@ -199,7 +242,142 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m031>=2014 & df$cf20m031<=2017,]$marriage_dur <- "2014_2017"
   df[df$cf20m031>=2009 & df$cf20m031<=2013,]$marriage_dur <- "2009_2013"
   df[df$cf20m031<=2008,]$marriage_dur <- "_2008"
-  df[df$cf20m031==999,]$marriage_dur <- "NA"
+  df[df$cf20m031==999,]$marriage_dur <- "Missing"
+
+  # Currently have a partner
+  df$cf20m024 [is.na(df$cf20m024 )] <- 999
+  df$partner <- "NA"
+  df[!is.na(df$cf20m024) & df$cf20m024==1,]$partner <- "1_yes"
+  df[!is.na(df$cf20m024) & df$cf20m024==2,]$partner <- "2_no"
+  df[!is.na(df$cf20m024) & df$cf20m024==999,]$partner <- "missing"
+  
+  #GENERATE partner delta
+  df$partner_delta <- 0
+  df[df$cf20m024!=df$cf19l024,]$partner_delta <- 1 
+  
+  # Generate partner duration
+  df$cf20m028 [is.na(df$cf20m028 )] <- 999
+  df$partner_dur <- "NA"
+  df[df$cf20m028 >=2018 & df$cf20m028 <=2020,]$partner_dur <- "2018_2020"
+  df[df$cf20m028 >=2015 & df$cf20m028 <=2017,]$partner_dur <- "2015_2017"
+  df[df$cf20m028 >=2011 & df$cf20m028 <=2014,]$partner_dur <- "2011_2014"
+  df[df$cf20m028 >=2006 & df$cf20m028 <=2010,]$partner_dur <- "2006_2010"
+  df[df$cf20m028 <=2005 &  df$cf20m028 >999,]$partner_dur <- "_2005"
+  df[df$cf20m028 ==999,]$partner_dur <- "Missing"
+  
+
+  # Generate partner living type
+  df$woonvorm_2020 [is.na(df$woonvorm_2020 )] <- 999
+  df$partner_type <- "NA"
+  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==1,]$partner_type <- "1_single"
+  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==2,]$partner_type <- "2_coh_no_child"
+  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==3,]$partner_type <- "3_coh_w_child"
+  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==4,]$partner_type <- "4_single_w_child"
+  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==5,]$partner_type <- "5_other"
+  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==999,]$partner_type <- "missing"
+  
+
+  #GENERATE partner living type delta
+  df$partner_type_delta <- 0
+  df[df$woonvorm_2020!=df$woonvorm_2019,]$partner_type_delta <- 1
+  
+  # Generate relationship satisfaction
+  df$cf20m180 [is.na(df$cf20m180)] <-999
+  df$cf20m166 [is.na(df$cf20m166)] <-999
+  df$rela_satisfied <- "8_NA"
+  df[!is.na(df$cf20m166) & df$cf20m166<=4,]$rela_satisfied <- "7_single_dissatisfied"
+  df[!is.na(df$cf20m166) & df$cf20m166>=5 & df$cf20m166<=7,]$rela_satisfied <- "6_single_neutral"
+  df[!is.na(df$cf20m166) & df$cf20m166>=8,]$rela_satisfied <- "4_single_very_satisfied"
+  df[!is.na(df$cf20m180) & df$cf20m180<=6,]$rela_satisfied <- "3_relation_less_satisfied"
+  df[!is.na(df$cf20m180) & df$cf20m180>=7 & df$cf20m180<=8,]$rela_satisfied <- "2_relation_satisfied"
+  df[!is.na(df$cf20m180) & df$cf20m180>=9,]$rela_satisfied <- "1_relation_very_satisfied"
+  df[!is.na(df$cf20m166) & df$cf20m166==999, !is.na(df$cf20m180) & df$cf20m180==999]$rela_satisfied  <- "missing"
+  
+  #Add housework   
+  df$cf18k184 [is.na(df$cf20m180)] <-999
+  df$housework <- "NA"
+  df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
+  df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
+  df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
+  df[!is.na(df$cf18k184) & df$cf18k184==4,]$housework <- "4_not applicabler"
+  df[!is.na(df$cf18k184) & df$cf18k184==999,]$housework <- "missing"
+  
+
+  
+  #new data frame only including personality variables
+  new_df = subset(train, select = c(cp20l029, cp20l030, cp20l031, cp20l032, cp20l033, cp20l034, cp20l035, cp20l036, cp20l037, cp20l038, cp20l039, 
+                                    cp20l040, cp20l041, cp20l042, cp20l043, cp20l044, cp20l045, cp20l046, cp20l047, cp20l048, cp20l049, 
+                                    cp20l050, cp20l051, cp20l052, cp20l053, cp20l054, cp20l055, cp20l056, cp20l057, cp20l058, cp20l059, 
+                                    cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
+    #Omit rows with missing values on any of the personality variables
+  na.omit(new_df)
+  new_df <- subset(new_df, 
+                   !(is.na(cp20l029) |
+                       is.na(cp20l030) |
+                       is.na(cp20l031) |
+                       is.na(cp20l032) |
+                       is.na(cp20l033) |
+                       is.na(cp20l034) |
+                       is.na(cp20l035) |
+                       is.na(cp20l036) |
+                       is.na(cp20l037) |
+                       is.na(cp20l038) |
+                       is.na(cp20l039) |
+                       is.na(cp20l040) |
+                       is.na(cp20l041) |
+                       is.na(cp20l042) |
+                       is.na(cp20l043) |
+                       is.na(cp20l044) |
+                       is.na(cp20l045) |
+                       is.na(cp20l046) |
+                       is.na(cp20l047) |
+                       is.na(cp20l048) |
+                       is.na(cp20l049) |
+                       is.na(cp20l050) |
+                       is.na(cp20l051) |
+                       is.na(cp20l052) |
+                       is.na(cp20l053) |
+                       is.na(cp20l054) |
+                       is.na(cp20l055) |
+                       is.na(cp20l056) |
+                       is.na(cp20l057) |
+                       is.na(cp20l058) |
+                       is.na(cp20l059) |
+                       is.na(cp20l060) |
+                       is.na(cp20l061) |
+                       is.na(cp20l062) |
+                       is.na(cp20l063) |
+                       is.na(cp20l064) |
+                       is.na(cp20l065) |
+                       is.na(cp20l066) |
+                       is.na(cp20l067) |
+                       is.na(cp20l068) |
+                       is.na(cp20l069) )
+  )
+  
+  
+
+  
+  
+  #Factor analysis (confimatory, as based on the expectation of five personality traits)
+  data_fa <- factanal(new_df, factors = 5)
+  
+  personality_factor1<-data_fa$loadings
+  personality_factor2<-data_fa$loadings
+  personality_factor3<-data_fa$loadings
+  personality_factor4<-data_fa$loadings
+  personality_factor5<-data_fa$loadings
+  
+  #Jessica's interpretation of the five factors, based on prior expectation/theory: 
+  #Factor 1 Neurotism
+  #Factor 2 Extraversion
+  #Factor 3 Agreeableness
+  #Factor 4 Openness to experience
+  #Factor 5 Conscientiousness
+  
+  #Based on the p-value, this number of factors does not capture all dimensions in the data; however a different number (3-6) of factors does not seem to improve it;
+
+  # Source: https://www.geo.fu-berlin.de/en/v/soga-r/Advances-statistics/Multivariate-approaches/Factor-Analysis/A-Simple-Example-of-Factor-Analysis-in-R/index.html
   
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
@@ -210,18 +388,32 @@ clean_df <- function(df, background_df = NULL) {
                'field_edu',
                'occupation',
                'income',
-               'satisfied_own_finance',
+               'income_log',
                'owner',
-               'rela_satisfied',
-               'health',
-               'relig',
-               'personality',
+               'satisfied_own_finance',
                'urban',
-               'help_fr_parents',
+               'urban_delta',
+               'health',
+               'gyno',
+               'relig_fa',
+               'sm_fa',
+               'dist_fr_parents',
+               'rela_satisfied',
+               'marriage_dur',
                'next_child',
+               'numb_child',
                'first_birth',
+               'partner',
+               'partner_delta',   
                'partner_dur',
-               'marriage_dur')  
+               'housework',
+               'partner_type',
+               'partner_type_delta',
+               'personality_factor1',   
+               'personality_factor2',
+               'personality_factor3',
+               'personality_factor4',               
+               'personality_factor5')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
@@ -232,6 +424,39 @@ clean_df <- function(df, background_df = NULL) {
   return(df)
 }
 
+
+
+#####################
+
+train_save_model <- function(cleaned_df, outcome_df) {
+  # Trains a model using the cleaned dataframe and saves the model to a file.
+  
+  # Parameters:
+  #cleaned_df (dataframe): The cleaned data from clean_df function to be used for training the model.
+  #outcome_df (dataframe): The data with the outcome variable (e.g., from PreFer_train_outcome.csv or PreFer_fake_outcome.csv).
+  
+  ## This script contains a bare minimum working example
+  #set.seed(1) # not useful here because logistic regression deterministic
+  
+  # Combine cleaned_df and outcome_df
+  model_df <- merge(cleaned_df, outcome_df, by = "nomem_encr")
+  
+  # Logistic regression model
+  model <- logistf (new_child ~ gender_bg*(age+migration+satisfied_own_finance+rela+satisfied+marriage_dur+owner+education+field_education+occupation+income+income_log+urban+urban_delta+health+gyno+relig_fa+sm_fa+dist_fr_parents+next_child+numb_child+first_birth+partner+partner_delta+partner_dur+partner_type+partner_type_delta+personality_factor1+personality_factor2+personality_factor3+personality_factor4+personality_factor5), data = model_df) 
+
+  # Save the model
+  saveRDS(model, "model.rds")
+}
+
+
+###############
+
+setwd("Z:/PreFer/") 
+
+train_cleaned <- clean_df(train)
+
+# training and saving the model
+train_save_model(train_cleaned, outcome)
 
 
 #####################
