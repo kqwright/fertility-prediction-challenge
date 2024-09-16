@@ -259,7 +259,7 @@ clean_df <- function(df, background_df = NULL) {
                          is.na(cr20m042) )
                                  )
   
-  data_relig <- factanal(cr20m041 cr20m042, factors = 1, scores="regression")
+  data_relig <- factanal(relig_df, factors = 1, scores="regression")
   relig_fa <-data_relig$scores
 
   
