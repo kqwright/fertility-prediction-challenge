@@ -251,17 +251,21 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
 
 
-  # Generate religiousness factor
-  relig_df = subset(df, select = c(cr20m041, cr20m042))
-  na.omit(relig_df)
-  relig_df <- subset(relig_df, 
-                     !(is.na(cr20m041) |
-                         is.na(cr20m042) )
-                                 )
-  
-  data_relig <- factanal(relig_df, factors = 1, scores="regression")
-  relig_fa <-data_relig$scores
+  # Generate religiousness factor how often attend religious gatherings
+  df$cr20m041[is.na(df$cr20m041)] <-999
+  df$relig1 <- "NA"
+  df[!is.na(df$cr20m041) & (df$cr20m041==1 | df$cr20m041==2 | df$cr20m041==3),]$relig1 <- "1_once_week_or_more"
+  df[!is.na(df$cr20m041) & (df$cr20m041==4 | df$cr20m041==5),]$relig1 <- "2_monthly_year"
+  df[!is.na(df$cr20m041) & df$cr20m041==6,]$relig1 <- "3_never"
+  df[!is.na(df$cr20m041) | df$cr20m041==999,]$relig1 <- "missing"
 
+ # Aside from religious gatherings, how often do you pray
+  df$cr20m042[is.na(df$cr20m042)] <-999
+  df$relig2 <- "NA"
+  df[!is.na(df$cr20m042) & (df$cr20m042==1 | df$cr20m042==2 | df$cr20m042==3),]$relig2 <- "1_once_week_or_more"
+  df[!is.na(df$cr20m042) & (df$cr20m042==4 | df$cr20m042==5),]$relig2 <- "2_monthly_year"
+  df[!is.na(df$cr20m042) & df$cr20m042==6,]$relig2 <- "3_never"
+  df[!is.na(df$cr20m042) | df$cr20m042==999,]$relig2 <- "missing"
   
   # Generate social media factor
   sm_df = subset(df, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
