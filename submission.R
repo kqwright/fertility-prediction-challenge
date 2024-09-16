@@ -151,8 +151,6 @@ clean_df <- function(df, background_df = NULL) {
   #128: Do you think you will have [more] children in the future? yes, no, i don't know
   #129: How many [more] children do you think you will have in the future? continuous
   #130: Within how many years do you hope to have your [first/next] child?
-  
-  df[df$cf20m13==2025,]$cf20m13 <-5
   df$cf20m130[is.na(df$cf20m130)] <- 999
   df$cf20m128[is.na(df$cf20m128)] <- 999
   df$next_child <- "NA"
