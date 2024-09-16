@@ -243,13 +243,13 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf20m166) | df$cf20m166==999, !is.na(df$cf20m180) | df$cf20m180==999]$rela_satisfied  <- "missing"
   
   #Add housework   
-  df$cf18k184[is.na(df$cf20m180)] <-999
+  df$cf18k184[is.na(df$cf18k184)] <-999
   df$housework <- "NA"
   df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
   df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
   df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
   df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
-  
+
 
   # Generate religiousness factor
   relig_df = subset(train, select = c(cr20m041, cr20m042))
