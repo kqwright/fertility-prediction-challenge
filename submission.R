@@ -140,35 +140,6 @@ clean_df <- function(df, background_df = NULL) {
   
   
   
-
-  # Generate religiousness factor
-  relig_df = subset(train, select = c(cr20m041, cr20m042))
-  na.omit(relig_df)
-  relig_df <- subset(relig_df, 
-                     !(is.na(cr20m041) |
-                         is.na(cr20m042) )
-                                 )
-  
-  data_relig <- factanal(relig_df, factors = 1, scores="regression")
-  relig_fa <-data_relig$scores
-
-  
-  
-  #how to make data frame with 4 variables: cs20m267 cs20m277 cs20m280 cs20m281 to generate factor? 
-  # Generate social media
-  sm_df = subset(train, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
-  na.omit(sm_df)
-  sm_df <- subset(sm_df, 
-                     !(is.na(cs20m267) |
-                         is.na(cs20m277) |
-                         is.na(cs20m280) |
-                         is.na(cs20m281) )
-  )
-  
-  data_sm <- factanal(sm_df, factors = 1, scores="regression")
-  sm_fa <-sm_df$scores
-
-  
   # Generate help from parents
   df$cf20m398[is.na(df$cf20m398 )] <- 999
   df$dist_fr_parents <- "NA"
@@ -177,7 +148,6 @@ clean_df <- function(df, background_df = NULL) {
   
   
   # Generate fertility intentions 
-  ##JULIA HELP in cf20m130 one of the values is coded as 2025, should be 3, how to change?
   #128: Do you think you will have [more] children in the future? yes, no, i don't know
   #129: How many [more] children do you think you will have in the future? continuous
   #130: Within how many years do you hope to have your [first/next] child?
@@ -284,8 +254,33 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf18k184) & df$cf18k184==999,]$housework <- "missing"
   
 
+  # Generate religiousness factor
+  relig_df = subset(train, select = c(cr20m041, cr20m042))
+  na.omit(relig_df)
+  relig_df <- subset(relig_df, 
+                     !(is.na(cr20m041) |
+                         is.na(cr20m042) )
+                                 )
   
-  #new data frame only including personality variables
+  data_relig <- factanal(relig_df, factors = 1, scores="regression")
+  relig_fa <-data_relig$scores
+
+  
+  # Generate social media factor
+  sm_df = subset(train, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
+  na.omit(sm_df)
+  sm_df <- subset(sm_df, 
+                     !(is.na(cs20m267) |
+                         is.na(cs20m277) |
+                         is.na(cs20m280) |
+                         is.na(cs20m281) )
+  )
+  
+  data_sm <- factanal(sm_df, factors = 1, scores="regression")
+  sm_fa <-sm_df$scores
+
+  
+  #Generate personality factors, big five
   new_df = subset(train, select = c(cp20l029, cp20l030, cp20l031, cp20l032, cp20l033, cp20l034, cp20l035, cp20l036, cp20l037, cp20l038, cp20l039, 
                                     cp20l040, cp20l041, cp20l042, cp20l043, cp20l044, cp20l045, cp20l046, cp20l047, cp20l048, cp20l049, 
                                     cp20l050, cp20l051, cp20l052, cp20l053, cp20l054, cp20l055, cp20l056, cp20l057, cp20l058, cp20l059, 
