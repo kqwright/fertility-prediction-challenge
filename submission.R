@@ -1,9 +1,4 @@
 
-
-
-install.packages(c("dplyr","data.table","tidyr", "stats"), repos="https://cran.r-project.org")
-
-
 library(data.table)
 library(data.table)
 library(stats)
