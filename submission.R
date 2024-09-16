@@ -8,7 +8,7 @@ library(stats)
 #1. Read in data
 #a. read in training data and outcome
 #b. strongly advised to save datafiles separate from local repository so they are not accidently made public through a push function to GitHub
-#c. The code to read-in your data is the only code you don't need to document through your repository
+
 
 
 #2. Preprocess data
@@ -146,13 +146,6 @@ clean_df <- function(df, background_df = NULL) {
   df$dist_fr_parents <- df$cf20m398
   df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
 
-
-
-
-  Output will be saved to: /data/predictions.csv 
-Error in `$<-.data.frame`(`*tmp*`, "next_child", value = "Wants more, unknown time frame") : 
-  replacement has 1 row, data has 0
-Calls: main ... predict_outcomes -> clean_df -> $<- -> $<-.data.frame
   
   # Generate fertility intentions 
   #128: Do you think you will have [more] children in the future? yes, no, i don't know
