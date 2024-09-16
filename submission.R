@@ -42,7 +42,7 @@ clean_df <- function(df, background_df = NULL) {
   df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
   
 #Get education level
-  df$oplcat_2020 [is.na(df$oplcat_2020 )] <- 999 
+  df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
   df$education <- NA
   df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_primary"
   df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
@@ -74,14 +74,14 @@ clean_df <- function(df, background_df = NULL) {
   
   
   #Get employment
-  df$ci20m383[is.na(df$ci20m383 )] <- 999
+  df$ci20m383[is.na(df$ci20m383)] <- 999
   df$occupation <- NA
   df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation <- "employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation <- "self-employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation <- "student"
   df[!is.na(df$ci20m383) & (df$ci20m383==4 | df$ci20m383==5  | df$ci20m383==6 |df$ci20m383==8 |  df$ci20m383==9 | df$ci20m383==10 | df$ci20m383==11 | df$ci20m383==12 | df$ci20m383==13),]$occupation <- "not_employed"
-  df[!is.na(df$ci20m383) & (df$ci20m383==999),]$occupation <- "missing"
-  
+  df[!is.na(df$ci20m383) | (df$ci20m383==999),]$occupation <- "missing"
+
   
   # Get income, input missing values with mean income
   df$income <- df$nettohh_f_2020
@@ -90,22 +90,22 @@ clean_df <- function(df, background_df = NULL) {
   
   
   # Urban
-  df$sted_2020 [is.na(df$sted_2020 )] <- 999  
-  df$sted_2019 [is.na(df$sted_2019 )] <- 999  
+  df$sted_2020[is.na(df$sted_2020)] <- 999  
+  df$sted_2019[is.na(df$sted_2019)] <- 999  
   df$urban <- "NA"
   df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extremely urban"
   df[!is.na(df$sted_2020) & df$sted_2020==2,]$urban <- "2_very urban"
   df[!is.na(df$sted_2020) & df$sted_2020==3,]$urban <- "3_moderately urban"
   df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slightly urban"
   df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_slightly urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==999,]$urban <- "missing"
+  df[!is.na(df$sted_2020) | df$sted_2020==999,]$urban <- "missing"
   
   #GENERATE URBAN DELTA 
   df$urban_delta <- 0
   df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
   
   # Add how satisfied individuals are with their finances
-  df$ci20m006 [is.na(df$ci20m006 )] <- 999 
+  df$ci20m006[is.na(df$ci20m006)] <- 999 
    df$satisfied_own_finance <- "NA"
    df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
    df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
@@ -113,30 +113,30 @@ clean_df <- function(df, background_df = NULL) {
    df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
    df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
    df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
-   df[!is.na(df$ci20m006) & df$ci20m006==999,]$satisfied_own_finance <- "missing"
+   df[!is.na(df$ci20m006) | df$ci20m006==999,]$satisfied_own_finance <- "missing"
    
    # Add whether the respondent is an owner of its current dwelling
-   df$cd20m003 [is.na(df$cd20m003 )] <- 999 
-    df$owner <- "NA"
+   df$cd20m003[is.na(df$cd20m003)] <- 999 
+  df$owner <- "NA"
    df[!is.na(df$cd20m003) & (df$cd20m003==1 |df$cd20m003==2 | df$cd20m003==4),]$owner <- "1_no"
    df[!is.na(df$cd20m003) & df$cd20m003==3,]$owner <- "2_yes"
-   df[!is.na(df$cd20m003) & df$cd20m003==999,]$owner <- "missing"
+   df[!is.na(df$cd20m003) | df$cd20m003==999,]$owner <- "missing"
   
 
   # Generate health
-  df$ch20m004 [is.na(df$ch20m004 )] <- 999
+  df$ch20m004[is.na(df$ch20m004 )] <- 999
   df$health <- "NA"
   df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
   df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
   df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
   df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
-  df[!is.na(df$ch20m004) & df$ch20m004==999,]$health <- "missing"
+  df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
   
-  df$ch20m004 [is.na(df$ch20m219 )] <- 999  
+  df$ch20m004[is.na(df$ch20m219 )] <- 999  
   df$gyno <- "NA"
   df[!is.na(df$ch20m219) & df$ch20m219==0,]$gyno <- "0_no"
   df[!is.na(df$ch20m219) & df$ch20m219==1,]$gyno <- "1_yes"
-  df[!is.na(df$ch20m219) & df$ch20m219==999,]$gyno <- "missing"
+  df[!is.na(df$ch20m219) | df$ch20m219==999,]$gyno <- "missing"
   
   
   
@@ -170,7 +170,7 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf20m129) & df$cf20m129==1,]$numb_child <- "1"
   df[!is.na(df$cf20m129) & df$cf20m129==2,]$numb_child <- "2"
   df[!is.na(df$cf20m129) & df$cf20m129>=3,]$numb_child <- "3 or more"
-  df[!is.na(df$cf20m129) & df$cf20m129==999,]$numb_child <- "missing"
+  df[!is.na(df$cf20m129) | df$cf20m129==999,]$numb_child <- "missing"
   
    
   # First birth
@@ -196,18 +196,18 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m031==999,]$marriage_dur <- "Missing"
 
   # Currently have a partner
-  df$cf20m024 [is.na(df$cf20m024 )] <- 999
+  df$cf20m024[is.na(df$cf20m024)] <- 999
   df$partner <- "NA"
   df[!is.na(df$cf20m024) & df$cf20m024==1,]$partner <- "1_yes"
   df[!is.na(df$cf20m024) & df$cf20m024==2,]$partner <- "2_no"
-  df[!is.na(df$cf20m024) & df$cf20m024==999,]$partner <- "missing"
+  df[!is.na(df$cf20m024) | df$cf20m024==999,]$partner <- "missing"
   
   #GENERATE partner delta
   df$partner_delta <- 0
   df[df$cf20m024!=df$cf19l024,]$partner_delta <- 1 
   
   # Generate partner duration
-  df$cf20m028 [is.na(df$cf20m028 )] <- 999
+  df$cf20m028[is.na(df$cf20m028)] <- 999
   df$partner_dur <- "NA"
   df[df$cf20m028 >=2018 & df$cf20m028 <=2020,]$partner_dur <- "2018_2020"
   df[df$cf20m028 >=2015 & df$cf20m028 <=2017,]$partner_dur <- "2015_2017"
@@ -218,14 +218,14 @@ clean_df <- function(df, background_df = NULL) {
   
 
   # Generate partner living type
-  df$woonvorm_2020 [is.na(df$woonvorm_2020 )] <- 999
+  df$woonvorm_2020[is.na(df$woonvorm_2020)] <- 999
   df$partner_type <- "NA"
   df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==1,]$partner_type <- "1_single"
   df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==2,]$partner_type <- "2_coh_no_child"
   df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==3,]$partner_type <- "3_coh_w_child"
   df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==4,]$partner_type <- "4_single_w_child"
   df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==5,]$partner_type <- "5_other"
-  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==999,]$partner_type <- "missing"
+  df[!is.na(df$woonvorm_2020) | df$woonvorm_2020==999,]$partner_type <- "missing"
   
 
   #GENERATE partner living type delta
@@ -233,8 +233,8 @@ clean_df <- function(df, background_df = NULL) {
   df[df$woonvorm_2020!=df$woonvorm_2019,]$partner_type_delta <- 1
   
   # Generate relationship satisfaction
-  df$cf20m180 [is.na(df$cf20m180)] <-999
-  df$cf20m166 [is.na(df$cf20m166)] <-999
+  df$cf20m180[is.na(df$cf20m180)] <-999
+  df$cf20m166[is.na(df$cf20m166)] <-999
   df$rela_satisfied <- "8_NA"
   df[!is.na(df$cf20m166) & df$cf20m166<=4,]$rela_satisfied <- "7_single_dissatisfied"
   df[!is.na(df$cf20m166) & df$cf20m166>=5 & df$cf20m166<=7,]$rela_satisfied <- "6_single_neutral"
@@ -242,16 +242,16 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf20m180) & df$cf20m180<=6,]$rela_satisfied <- "3_relation_less_satisfied"
   df[!is.na(df$cf20m180) & df$cf20m180>=7 & df$cf20m180<=8,]$rela_satisfied <- "2_relation_satisfied"
   df[!is.na(df$cf20m180) & df$cf20m180>=9,]$rela_satisfied <- "1_relation_very_satisfied"
-  df[!is.na(df$cf20m166) & df$cf20m166==999, !is.na(df$cf20m180) & df$cf20m180==999]$rela_satisfied  <- "missing"
+  df[!is.na(df$cf20m166) | df$cf20m166==999, !is.na(df$cf20m180) | df$cf20m180==999]$rela_satisfied  <- "missing"
   
   #Add housework   
-  df$cf18k184 [is.na(df$cf20m180)] <-999
+  df$cf18k184[is.na(df$cf20m180)] <-999
   df$housework <- "NA"
   df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
   df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
   df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
   df[!is.na(df$cf18k184) & df$cf18k184==4,]$housework <- "4_not applicabler"
-  df[!is.na(df$cf18k184) & df$cf18k184==999,]$housework <- "missing"
+  df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
   
 
   # Generate religiousness factor
@@ -394,7 +394,7 @@ clean_df <- function(df, background_df = NULL) {
                             )  
   
   # Keeping data with variables selected
-  df <- df[ , keepcols ]
+  df <- df[ , keepcols]
   
   # turning gender into factor
   df$gender_bg<- as.factor(df$gender_bg) 
