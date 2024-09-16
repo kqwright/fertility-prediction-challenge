@@ -226,6 +226,7 @@ clean_df <- function(df, background_df = NULL) {
   
 
   #GENERATE partner living type delta
+   df$woonvorm_2019[is.na(df$woonvorm_2019)] <- 999
   df$partner_type_delta <- 0
   df[df$woonvorm_2020!=df$woonvorm_2019,]$partner_type_delta <- 1
   
