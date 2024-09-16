@@ -91,7 +91,7 @@ clean_df <- function(df, background_df = NULL) {
   # Get income, input missing values with mean income
   df$income <- df$nettohh_f_2020
   df[is.na(df$nettohh_f_2020),]$income <-  mean(df$nettohh_f_2020, na.rm=TRUE)
-  df[log(df$income),] <- df$income_log
+  income_log <- log(df$income)
   
   
   # Urban
@@ -154,8 +154,7 @@ clean_df <- function(df, background_df = NULL) {
                                  )
   
   data_relig <- factanal(relig_df, factors = 1, scores="regression")
-  relig_fa<-data_relig$loadings
-  relig_fa2 <-data_relig$scores
+  relig_fa <-data_relig$scores
 
   
   
@@ -171,8 +170,7 @@ clean_df <- function(df, background_df = NULL) {
   )
   
   data_sm <- factanal(sm_df, factors = 1, scores="regression")
-  sm_fa<-sm_df$loadings
-  sm_fa2 <-sm_df$scores
+  sm_fa <-sm_df$scores
 
   
   # Generate help from parents
@@ -346,15 +344,16 @@ clean_df <- function(df, background_df = NULL) {
 
   
   
-  #Factor analysis (confimatory, as based on the expectation of five personality traits)
-  data_fa <- factanal(new_df, factors = 5)
+  #Factor analysis (confirmatory, as based on the expectation of five personality traits)
+  data_fa <- factanal(new_df, factors = 5, scores="regression")
   
-  personality_factor1<-data_fa$loadings
-  personality_factor2<-data_fa$loadings
-  personality_factor3<-data_fa$loadings
-  personality_factor4<-data_fa$loadings
-  personality_factor5<-data_fa$loadings
-  
+  personality_factor<-data_fa$scores
+  factor1 <- personality_factor[1]
+  factor2 <- personality_factor[2]
+  factor3 <- personality_factor[3]
+  factor4 <- personality_factor[4]
+  factor5 <- personality_factor[5]
+
   #Jessica's interpretation of the five factors, based on prior expectation/theory: 
   #Factor 1 Neurotism
   #Factor 2 Extraversion
@@ -396,11 +395,12 @@ clean_df <- function(df, background_df = NULL) {
                'housework',
                'partner_type',
                'partner_type_delta',
-               'personality_factor1',   
-               'personality_factor2',
-               'personality_factor3',
-               'personality_factor4',               
-               'personality_factor5')  
+               'factor1', 
+               'factor2', 
+               'factor3', 
+               'factor4', 
+               'factor5' 
+                            )  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
@@ -412,7 +412,6 @@ clean_df <- function(df, background_df = NULL) {
 }
 
 
-###############################
 
 predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds"){
   # Generate predictions using the saved model and the input dataframe.
@@ -465,6 +464,3 @@ predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds
   return( df_predict )
 }
 
-
-
-###################################
