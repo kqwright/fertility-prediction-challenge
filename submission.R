@@ -105,15 +105,15 @@ clean_df <- function(df, background_df = NULL) {
   df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
   
   # Add how satisfied individuals are with their finances
-  df$ci20m006[is.na(df$ci20m006)] <- 999 
-   df$satisfied_own_finance <- "NA"
-   df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
-   df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
-   df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
-   df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
-   df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
-   df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
-   df[!is.na(df$ci20m006) | df$ci20m006==999,]$satisfied_own_finance <- "missing"
+  #df$ci20m006[is.na(df$ci20m006)] <- 999 
+  # df$satisfied_own_finance <- "NA"
+  # df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
+  # df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
+  # df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
+  # df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
+  # df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
+  # df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
+  # df[!is.na(df$ci20m006) | df$ci20m006==999,]$satisfied_own_finance <- "missing"
    
    # Add whether the respondent is an owner of its current dwelling
    df$cd20m003[is.na(df$cd20m003)] <- 999 
@@ -124,13 +124,13 @@ clean_df <- function(df, background_df = NULL) {
   
 
   # Generate health
-  df$ch20m004[is.na(df$ch20m004 )] <- 999
-  df$health <- "NA"
-  df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
-  df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
-  df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
-  df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
-  df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
+  #df$ch20m004[is.na(df$ch20m004 )] <- 999
+  #df$health <- "NA"
+  #df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
+  #df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
+  #df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
+  #df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
+  #df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
   
   df$ch20m004[is.na(df$ch20m219 )] <- 999  
   df$gyno <- "NA"
@@ -410,10 +410,8 @@ clean_df <- function(df, background_df = NULL) {
                'income',
                'income_log',
                'owner',
-               'satisfied_own_finance',
                'urban',
                'urban_delta',
-               'health',
                'gyno',
                'relig_fa',
                'sm_fa',
