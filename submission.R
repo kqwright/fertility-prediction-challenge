@@ -15,7 +15,7 @@ library(stats)
 #total <- merge(data,outcome,by="nomem_encr")
 #total <- total[total$outcome_available==1,]
 myvars <- c("nomem_encr", "new_child","gender_bg","migration_background_bg","age_bg","partner_2020","cf20m128", "oplmet_2020", "cr20m041", "cr20m042", "ch20m004", "ch20m219", "sted_2020", "nettohh_f_2020", "cw20m011", "cw20m012", "cw20m013", "cw20m014", "cw20m015", "cw20m016", "cw20m017", "cw20m018", "cw20m019", "cw20m020", "cw20m021", "cw20m022", "cw20m023", "cw20m024", "cw20m025", "cw20m026", "cw20m027", "ci20m383", "cf20m180", "cf20m166", "cf20m031", "ci20m006", "cd20m003", "cf18k184", "cp20l029", "cp20l030", "cp20l031", "cp20l032", "cp20l033", "cp20l034", "cp20l035", "cp20l036", "cp20l037", "cp20l038", "cp20l039", "cp20l040", "cp20l041", "cp20l042", "cp20l043", "cp20l044", "cp20l045", "cp20l046", "cp20l047", "cp20l048", "cp20l049", "cp20l050", "cp20l051", "cp20l052", "cp20l053", "cp20l054", "cp20l055", "cp20l056", "cp20l057", "cp20l058", "cp20l059", "cp20l060", "cp20l061", "cp20l062", "cp20l063", "cp20l064", "cp20l065", "cp20l066", "cp20l067", "cp20l068", "cp20l069")
-newdata <- total[myvars]
+#newdata <- total[myvars]
 
 
 clean_df <- function(df, background_df = NULL) {
