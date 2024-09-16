@@ -248,7 +248,6 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
   df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
   df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
-  df[!is.na(df$cf18k184) & df$cf18k184==4,]$housework <- "4_not applicabler"
   df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
   
 
