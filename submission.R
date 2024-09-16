@@ -282,11 +282,53 @@ clean_df <- function(df, background_df = NULL) {
 
   
   #Generate personality factors, big five
+  df$cp20l029[is.na(df$cp20l029)] <-0
+  df$cp20l030[is.na(df$cp20l030)] <-0
+  df$cp20l031[is.na(df$cp20l031)] <-0
+  df$cp20l032[is.na(df$cp20l032)] <-0
+  df$cp20l033[is.na(df$cp20l033)] <-0
+  df$cp20l034[is.na(df$cp20l034)] <-0
+  df$cp20l035[is.na(df$cp20l035)] <-0
+  df$cp20l036[is.na(df$cp20l036)] <-0
+  df$cp20l037[is.na(df$cp20l037)] <-0
+  df$cp20l038[is.na(df$cp20l038)] <-0
+  df$cp20l039[is.na(df$cp20l039)] <-0
+  df$cp20l040[is.na(df$cp20l040)] <-0
+  df$cp20l041[is.na(df$cp20l041)] <-0
+  df$cp20l042[is.na(df$cp20l042)] <-0
+  df$cp20l043[is.na(df$cp20l043)] <-0
+  df$cp20l044[is.na(df$cp20l044)] <-0
+  df$cp20l045[is.na(df$cp20l045)] <-0
+  df$cp20l046[is.na(df$cp20l046)] <-0
+  df$cp20l047[is.na(df$cp20l047)] <-0
+  df$cp20l048[is.na(df$cp20l048)] <-0
+  df$cp20l049[is.na(df$cp20l049)] <-0
+  df$cp20l050[is.na(df$cp20l050)] <-0
+  df$cp20l051[is.na(df$cp20l051)] <-0
+  df$cp20l052[is.na(df$cp20l052)] <-0
+  df$cp20l053[is.na(df$cp20l053)] <-0
+  df$cp20l054[is.na(df$cp20l054)] <-0
+  df$cp20l055[is.na(df$cp20l055)] <-0
+  df$cp20l056[is.na(df$cp20l056)] <-0
+  df$cp20l057[is.na(df$cp20l057)] <-0
+  df$cp20l058[is.na(df$cp20l058)] <-0
+  df$cp20l059[is.na(df$cp20l059)] <-0
+  df$cp20l060[is.na(df$cp20l060)] <-0
+  df$cp20l061[is.na(df$cp20l061)] <-0
+  df$cp20l062[is.na(df$cp20l062)] <-0
+  df$cp20l063[is.na(df$cp20l063)] <-0
+  df$cp20l064[is.na(df$cp20l064)] <-0
+  df$cp20l065[is.na(df$cp20l065)] <-0
+  df$cp20l066[is.na(df$cp20l066)] <-0
+  df$cp20l067[is.na(df$cp20l067)] <-0
+  df$cp20l068[is.na(df$cp20l068)] <-0
+  df$cp20l069[is.na(df$cp20l069)] <-0
+  
   new_df = subset(df, select = c(cp20l029, cp20l030, cp20l031, cp20l032, cp20l033, cp20l034, cp20l035, cp20l036, cp20l037, cp20l038, cp20l039, 
                                     cp20l040, cp20l041, cp20l042, cp20l043, cp20l044, cp20l045, cp20l046, cp20l047, cp20l048, cp20l049, 
                                     cp20l050, cp20l051, cp20l052, cp20l053, cp20l054, cp20l055, cp20l056, cp20l057, cp20l058, cp20l059, 
                                     cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
-    #Omit rows with missing values on any of the personality variables
+  #Omit rows with missing values on any of the personality variables
   na.omit(new_df)
   new_df <- subset(new_df, 
                    !(is.na(cp20l029) |
