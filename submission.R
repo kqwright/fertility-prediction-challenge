@@ -44,13 +44,13 @@ clean_df <- function(df, background_df = NULL) {
 #Get education level
   df$oplcat_2020 [is.na(df$oplcat_2020 )] <- 999 
   df$education <- NA
-  df[df$oplcat_2020==1 & !is.na(df$oplmet_2020),]$education <- "1_primary"
+  df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_primary"
   df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
   df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education <- "3_sec_senior"
   df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
   df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_senior"
   df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
-  df[df$oplmet_2020==999 | is.na(df$oplmet_2020),]$education <- "other_missing"
+  df[df$oplmet_2020==999 | is.na(df$oplcat_2020),]$education <- "other_missing"
   
 # Get education field
   df$field_edu <- NA
