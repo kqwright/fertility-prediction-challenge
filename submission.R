@@ -91,6 +91,7 @@ clean_df <- function(df, background_df = NULL) {
   
   # Urban
   df$sted_2020 [is.na(df$sted_2020 )] <- 999  
+  df$sted_2019 [is.na(df$sted_2019 )] <- 999  
   df$urban <- "NA"
   df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extremely urban"
   df[!is.na(df$sted_2020) & df$sted_2020==2,]$urban <- "2_very urban"
