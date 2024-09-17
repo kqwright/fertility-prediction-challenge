@@ -256,25 +256,57 @@ clean_df <- function(df, background_df = NULL) {
   data_sm <- factanal(sm_df, factors = 1, scores="regression")
   sm_fa <-sm_df$scores
 
-  
-  #Generate personality factors, big five
 
-  new_df = (subset(df, select = c(cp20l029, cp20l030, cp20l031, cp20l032, cp20l033, cp20l034, cp20l035, cp20l036, cp20l037, cp20l038, cp20l039, 
-                                    cp20l040, cp20l041, cp20l042, cp20l043, cp20l044, cp20l045, cp20l046, cp20l047, cp20l048, cp20l049, 
-                                    cp20l050, cp20l051, cp20l052, cp20l053, cp20l054, cp20l055, cp20l056, cp20l057, cp20l058, cp20l059, 
-                                    cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
-  #Omit rows with missing values on any of the personality variables
-  #na.omit(new_df)
-  new_df = (subset(new_df, !(is.na(cp20l029) | is.na(cp20l030) | is.na(cp20l031) | is.na(cp20l032) | is.na(cp20l033) | is.na(cp20l034) | is.na(cp20l035) | is.na(cp20l036) | is.na(cp20l037) | is.na(cp20l038) | is.na(cp20l039) |
-                       is.na(cp20l040) | is.na(cp20l041) | is.na(cp20l042) | is.na(cp20l043) | is.na(cp20l044) | is.na(cp20l045) | is.na(cp20l046) | is.na(cp20l047) | is.na(cp20l048) | is.na(cp20l049) |
-                       is.na(cp20l050) | is.na(cp20l051) | is.na(cp20l052) | is.na(cp20l053) | is.na(cp20l054) | is.na(cp20l055) | is.na(cp20l056) | is.na(cp20l057) | is.na(cp20l058) | is.na(cp20l059) |
-                       is.na(cp20l060) | is.na(cp20l061) | is.na(cp20l062) | is.na(cp20l063) | is.na(cp20l064) | is.na(cp20l065) | is.na(cp20l066) | is.na(cp20l067) | is.na(cp20l068) | is.na(cp20l069) )))
+  #Generate personality factors, big five
+  personality = subset(df, select = c( cp20l029, cp20l030, cp20l031, cp20l032, cp20l033, cp20l034, cp20l035, cp20l036, cp20l037, cp20l038, cp20l039, cp20l040, cp20l041, cp20l042, cp20l043, cp20l044, cp20l045, cp20l046, cp20l047, cp20l048, cp20l049, cp20l050, cp20l051, cp20l052, cp20l053, cp20l054, cp20l055, cp20l056, cp20l057, cp20l058, cp20l059, cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
+  na.omit(personality)
+  personality <- subset(personality, 
+                    !(is.na(cp20l029) | 
+                      is.na(cp20l030) | 
+                      is.na(cp20l031) | 
+                      is.na(cp20l032) | 
+                      is.na(cp20l033) | 
+                      is.na(cp20l034) | 
+                      is.na(cp20l035) | 
+                      is.na(cp20l036) | 
+                      is.na(cp20l037) | 
+                      is.na(cp20l038) | 
+                      is.na(cp20l039) |
+                      is.na(cp20l040) | 
+                      is.na(cp20l041) | 
+                      is.na(cp20l042) | 
+                      is.na(cp20l043) | 
+                      is.na(cp20l044) | 
+                      is.na(cp20l045) | 
+                      is.na(cp20l046) | 
+                      is.na(cp20l047) | 
+                      is.na(cp20l048) | 
+                      is.na(cp20l049) |
+                      is.na(cp20l050) | 
+                      is.na(cp20l051) | 
+                      is.na(cp20l052) | 
+                      is.na(cp20l053) | 
+                      is.na(cp20l054) | 
+                      is.na(cp20l055) | 
+                      is.na(cp20l056) | 
+                      is.na(cp20l057) | 
+                      is.na(cp20l058) | 
+                      is.na(cp20l059) |
+                      is.na(cp20l060) | 
+                      is.na(cp20l061) | 
+                      is.na(cp20l062) | 
+                      is.na(cp20l063) | 
+                      is.na(cp20l064) | 
+                      is.na(cp20l065) | 
+                      is.na(cp20l066) | 
+                      is.na(cp20l067) | 
+                      is.na(cp20l068) | 
+                      is.na(cp20l069) )
+                       )
   
-  #Factor analysis (confirmatory, as based on the expectation of five personality traits)
-  #new_df2 <- df[complete.cases(new_df),]
-  data_fa <- factanal(new_df, factors = 5, scores="regression")
-  
+  data_fa <- factanal(personality, factors = 5, scores="regression")
   personality_factor<-data_fa$scores
+
   factor1 <- personality_factor[1]
     df$factor1[is.na(df$factor1)]<-999
   factor2 <- personality_factor[2]
