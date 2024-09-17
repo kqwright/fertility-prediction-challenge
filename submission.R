@@ -306,8 +306,8 @@ clean_df <- function(df, background_df = NULL) {
                                     cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
   #Omit rows with missing values on any of the personality variables
   na.omit(new_df)
-  new_df2<-complete.cases(new.df)
-  new_df2 <- subset(new_df, 
+  new_df2<-complete.cases(new_df)
+  new_df2 <- subset(new_df2, 
                    !(is.na(cp20l029) |
                        is.na(cp20l030) |
                        is.na(cp20l031) |
