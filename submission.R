@@ -114,13 +114,13 @@ clean_df <- function(df, background_df = NULL) {
   
 
   # Generate health
-  #df$ch20m004[is.na(df$ch20m004 )] <- 999
-  #df$health <- "NA"
-  #df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
-  #df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
-  #df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
-  #df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
-  #df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
+  df$ch20m004[is.na(df$ch20m004 )] <- 999
+  df$health <- "NA"
+  df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
+  df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
+  df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
+  df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
+  df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
  
   
   # Generate help from parents
