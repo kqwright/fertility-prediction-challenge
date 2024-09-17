@@ -278,7 +278,7 @@ clean_df <- function(df, background_df = NULL) {
                        )
                        
   
-  data_fa <- factanal(personality, factors = 5, scores="regression")
+  data_fa <- factanal(personality, factors = 5, scores="regression",  rotation = "varimax")
   personality_factor<-data_fa$scores
 
   factor1 <- personality_factor[1]
