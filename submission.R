@@ -306,7 +306,8 @@ clean_df <- function(df, background_df = NULL) {
                                     cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
   #Omit rows with missing values on any of the personality variables
   na.omit(new_df)
-  new_df <- subset(new_df, 
+  new_df2<-complete.cases(new.df)
+  new_df2 <- subset(new_df, 
                    !(is.na(cp20l029) |
                        is.na(cp20l030) |
                        is.na(cp20l031) |
@@ -355,14 +356,19 @@ clean_df <- function(df, background_df = NULL) {
   
   
   #Factor analysis (confirmatory, as based on the expectation of five personality traits)
-  data_fa <- factanal(new_df, factors = 5, scores="regression")
+  data_fa <- factanal(new_df2, factors = 5, scores="regression")
   
   personality_factor<-data_fa$scores
   factor1 <- personality_factor[1]
+    df$factor1[is.na(df$factor1)]<-999
   factor2 <- personality_factor[2]
+    df$factor2[is.na(df$factor2)]<-999
   factor3 <- personality_factor[3]
+    df$factor3[is.na(df$factor3)]<-999
   factor4 <- personality_factor[4]
+    df$factor4[is.na(df$factor4)]<-999
   factor5 <- personality_factor[5]
+    df$factor5[is.na(df$factor5)]<-999
 
   #Jessica's interpretation of the five factors, based on prior expectation/theory: 
   #Factor 1 Neurotism
