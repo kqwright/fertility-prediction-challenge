@@ -104,17 +104,7 @@ clean_df <- function(df, background_df = NULL) {
   df$urban_delta <- 0
   df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
   
-  # Add how satisfied individuals are with their finances
-  #df$ci20m006[is.na(df$ci20m006)] <- 999 
-  # df$satisfied_own_finance <- "NA"
-  # df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
-  # df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
-  # df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
-  # df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
-  # df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
-  # df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
-  # df[!is.na(df$ci20m006) | df$ci20m006==999,]$satisfied_own_finance <- "missing"
-   
+
    # Add whether the respondent is an owner of its current dwelling
    df$cd20m003[is.na(df$cd20m003)] <- 999 
   df$owner <- "NA"
@@ -131,14 +121,7 @@ clean_df <- function(df, background_df = NULL) {
   #df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
   #df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
   #df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
-  
-  df$ch20m004[is.na(df$ch20m219 )] <- 999  
-  df$gyno <- "NA"
-  df[!is.na(df$ch20m219) & df$ch20m219==0,]$gyno <- "0_no"
-  df[!is.na(df$ch20m219) & df$ch20m219==1,]$gyno <- "1_yes"
-  df[!is.na(df$ch20m219) | df$ch20m219==999,]$gyno <- "missing"
-  
-  
+ 
   
   # Generate help from parents
   df$cf20m398[is.na(df$cf20m398 )] <- 999
@@ -259,13 +242,6 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cr20m041) & df$cr20m041==6,]$relig1 <- "3_never"
   df[!is.na(df$cr20m041) | df$cr20m041==999,]$relig1 <- "missing"
 
- # Aside from religious gatherings, how often do you pray
-  df$cr20m042[is.na(df$cr20m042)] <-999
-  df$relig2 <- "NA"
-  df[!is.na(df$cr20m042) & (df$cr20m042==1 | df$cr20m042==2 | df$cr20m042==3),]$relig2 <- "1_once_week_or_more"
-  df[!is.na(df$cr20m042) & (df$cr20m042==4 | df$cr20m042==5),]$relig2 <- "2_monthly_year"
-  df[!is.na(df$cr20m042) & df$cr20m042==6,]$relig2 <- "3_never"
-  df[!is.na(df$cr20m042) | df$cr20m042==999,]$relig2 <- "missing"
   
   # Generate social media factor
   sm_df = subset(df, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
@@ -282,47 +258,47 @@ clean_df <- function(df, background_df = NULL) {
 
   
   #Generate personality factors, big five
-  df$cp20l029[is.na(df$cp20l029)] <-0
-  df$cp20l030[is.na(df$cp20l030)] <-0
-  df$cp20l031[is.na(df$cp20l031)] <-0
-  df$cp20l032[is.na(df$cp20l032)] <-0
-  df$cp20l033[is.na(df$cp20l033)] <-0
-  df$cp20l034[is.na(df$cp20l034)] <-0
-  df$cp20l035[is.na(df$cp20l035)] <-0
-  df$cp20l036[is.na(df$cp20l036)] <-0
-  df$cp20l037[is.na(df$cp20l037)] <-0
-  df$cp20l038[is.na(df$cp20l038)] <-0
-  df$cp20l039[is.na(df$cp20l039)] <-0
-  df$cp20l040[is.na(df$cp20l040)] <-0
-  df$cp20l041[is.na(df$cp20l041)] <-0
-  df$cp20l042[is.na(df$cp20l042)] <-0
-  df$cp20l043[is.na(df$cp20l043)] <-0
-  df$cp20l044[is.na(df$cp20l044)] <-0
-  df$cp20l045[is.na(df$cp20l045)] <-0
-  df$cp20l046[is.na(df$cp20l046)] <-0
-  df$cp20l047[is.na(df$cp20l047)] <-0
-  df$cp20l048[is.na(df$cp20l048)] <-0
-  df$cp20l049[is.na(df$cp20l049)] <-0
-  df$cp20l050[is.na(df$cp20l050)] <-0
-  df$cp20l051[is.na(df$cp20l051)] <-0
-  df$cp20l052[is.na(df$cp20l052)] <-0
-  df$cp20l053[is.na(df$cp20l053)] <-0
-  df$cp20l054[is.na(df$cp20l054)] <-0
-  df$cp20l055[is.na(df$cp20l055)] <-0
-  df$cp20l056[is.na(df$cp20l056)] <-0
-  df$cp20l057[is.na(df$cp20l057)] <-0
-  df$cp20l058[is.na(df$cp20l058)] <-0
-  df$cp20l059[is.na(df$cp20l059)] <-0
-  df$cp20l060[is.na(df$cp20l060)] <-0
-  df$cp20l061[is.na(df$cp20l061)] <-0
-  df$cp20l062[is.na(df$cp20l062)] <-0
-  df$cp20l063[is.na(df$cp20l063)] <-0
-  df$cp20l064[is.na(df$cp20l064)] <-0
-  df$cp20l065[is.na(df$cp20l065)] <-0
-  df$cp20l066[is.na(df$cp20l066)] <-0
-  df$cp20l067[is.na(df$cp20l067)] <-0
-  df$cp20l068[is.na(df$cp20l068)] <-0
-  df$cp20l069[is.na(df$cp20l069)] <-0
+  df$cp20l029[is.na(df$cp20l029)] <-"NA"
+  df$cp20l030[is.na(df$cp20l030)] <-"NA"
+  df$cp20l031[is.na(df$cp20l031)] <-"NA"
+  df$cp20l032[is.na(df$cp20l032)] <-"NA"
+  df$cp20l033[is.na(df$cp20l033)] <-"NA"
+  df$cp20l034[is.na(df$cp20l034)] <-"NA"
+  df$cp20l035[is.na(df$cp20l035)] <-"NA"
+  df$cp20l036[is.na(df$cp20l036)] <-"NA"
+  df$cp20l037[is.na(df$cp20l037)] <-"NA"
+  df$cp20l038[is.na(df$cp20l038)] <-"NA"
+  df$cp20l039[is.na(df$cp20l039)] <-"NA"
+  df$cp20l040[is.na(df$cp20l040)] <-"NA"
+  df$cp20l041[is.na(df$cp20l041)] <-"NA"
+  df$cp20l042[is.na(df$cp20l042)] <-"NA"
+  df$cp20l043[is.na(df$cp20l043)] <-"NA"
+  df$cp20l044[is.na(df$cp20l044)] <-"NA"
+  df$cp20l045[is.na(df$cp20l045)] <-"NA"
+  df$cp20l046[is.na(df$cp20l046)] <-"NA"
+  df$cp20l047[is.na(df$cp20l047)] <-"NA"
+  df$cp20l048[is.na(df$cp20l048)] <-"NA"
+  df$cp20l049[is.na(df$cp20l049)] <-"NA"
+  df$cp20l050[is.na(df$cp20l050)] <-"NA"
+  df$cp20l051[is.na(df$cp20l051)] <-"NA"
+  df$cp20l052[is.na(df$cp20l052)] <-"NA"
+  df$cp20l053[is.na(df$cp20l053)] <-"NA"
+  df$cp20l054[is.na(df$cp20l054)] <-"NA"
+  df$cp20l055[is.na(df$cp20l055)] <-"NA"
+  df$cp20l056[is.na(df$cp20l056)] <-"NA"
+  df$cp20l057[is.na(df$cp20l057)] <-"NA"
+  df$cp20l058[is.na(df$cp20l058)] <-"NA"
+  df$cp20l059[is.na(df$cp20l059)] <-"NA"
+  df$cp20l060[is.na(df$cp20l060)] <-"NA"
+  df$cp20l061[is.na(df$cp20l061)] <-"NA"
+  df$cp20l062[is.na(df$cp20l062)] <-"NA"
+  df$cp20l063[is.na(df$cp20l063)] <-"NA"
+  df$cp20l064[is.na(df$cp20l064)] <-"NA"
+  df$cp20l065[is.na(df$cp20l065)] <-"NA"
+  df$cp20l066[is.na(df$cp20l066)] <-"NA"
+  df$cp20l067[is.na(df$cp20l067)] <-"NA"
+  df$cp20l068[is.na(df$cp20l068)] <-"NA"
+  df$cp20l069[is.na(df$cp20l069)] <-"NA"
   
   new_df = subset(df, select = c(cp20l029, cp20l030, cp20l031, cp20l032, cp20l033, cp20l034, cp20l035, cp20l036, cp20l037, cp20l038, cp20l039, 
                                     cp20l040, cp20l041, cp20l042, cp20l043, cp20l044, cp20l045, cp20l046, cp20l047, cp20l048, cp20l049, 
@@ -409,24 +385,24 @@ clean_df <- function(df, background_df = NULL) {
                'occupation',
                'income',
                'income_log',
-               'owner',
                'urban',
                'urban_delta',
-               'gyno',
-               'relig_fa',
-               'sm_fa',
-               'dist_fr_parents',
-               'rela_satisfied',
-               'marriage_dur',
+               'owner',
+               'health',
+               'dist_fr_parents',               
                'next_child',
-               'numb_child',
-               'first_birth',
+               'numb_child',              
+               'first_birth',   
+               'marriage_dur',
                'partner',
                'partner_delta',   
                'partner_dur',
-               'housework',
                'partner_type',
-               'partner_type_delta',
+               'partner_type_delta',               
+               'rela_satisfied',
+               'housework',            
+               'relig1',
+               'sm_fa',
                'factor1', 
                'factor2', 
                'factor3', 
