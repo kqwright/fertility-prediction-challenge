@@ -265,10 +265,10 @@ clean_df <- function(df, background_df = NULL) {
                                     cp20l060, cp20l061, cp20l062, cp20l063, cp20l064, cp20l065, cp20l066, cp20l067, cp20l068, cp20l069))
   #Omit rows with missing values on any of the personality variables
   #na.omit(new_df)
-  new_df <- subset(new_df, !(is.na(cp20l029) | is.na(cp20l030) | is.na(cp20l031) | is.na(cp20l032) | is.na(cp20l033) | is.na(cp20l034) | is.na(cp20l035) | is.na(cp20l036) | is.na(cp20l037) | is.na(cp20l038) | is.na(cp20l039) |
+  new_df = (subset(new_df, !(is.na(cp20l029) | is.na(cp20l030) | is.na(cp20l031) | is.na(cp20l032) | is.na(cp20l033) | is.na(cp20l034) | is.na(cp20l035) | is.na(cp20l036) | is.na(cp20l037) | is.na(cp20l038) | is.na(cp20l039) |
                        is.na(cp20l040) | is.na(cp20l041) | is.na(cp20l042) | is.na(cp20l043) | is.na(cp20l044) | is.na(cp20l045) | is.na(cp20l046) | is.na(cp20l047) | is.na(cp20l048) | is.na(cp20l049) |
                        is.na(cp20l050) | is.na(cp20l051) | is.na(cp20l052) | is.na(cp20l053) | is.na(cp20l054) | is.na(cp20l055) | is.na(cp20l056) | is.na(cp20l057) | is.na(cp20l058) | is.na(cp20l059) |
-                       is.na(cp20l060) | is.na(cp20l061) | is.na(cp20l062) | is.na(cp20l063) | is.na(cp20l064) | is.na(cp20l065) | is.na(cp20l066) | is.na(cp20l067) | is.na(cp20l068) | is.na(cp20l069) ))
+                       is.na(cp20l060) | is.na(cp20l061) | is.na(cp20l062) | is.na(cp20l063) | is.na(cp20l064) | is.na(cp20l065) | is.na(cp20l066) | is.na(cp20l067) | is.na(cp20l068) | is.na(cp20l069) )))
   
   #Factor analysis (confirmatory, as based on the expectation of five personality traits)
   #new_df2 <- df[complete.cases(new_df),]
