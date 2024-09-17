@@ -258,39 +258,39 @@ clean_df <- function(df, background_df = NULL) {
 
 
   #Generate personality factors, big five
-  personality = subset(df, select = c(cp20l031, cp20l036, cp20l037, cp20l040, cp20l041, cp20l047, cp20l048, cp20l052, cp20l053, cp20l054, cp20l058, cp20l063, cp20l064,  cp20l068))
-  na.omit(personality)
-  personality <- subset(personality, 
-                    !(is.na(cp20l031) | 
-                      is.na(cp20l036) | 
-                      is.na(cp20l037) | 
-                      is.na(cp20l040) | 
-                      is.na(cp20l041) | 
-                      is.na(cp20l047) | 
-                      is.na(cp20l048) | 
-                      is.na(cp20l052) | 
-                      is.na(cp20l053) | 
-                      is.na(cp20l054) | 
-                      is.na(cp20l058) | 
-                      is.na(cp20l063) | 
-                      is.na(cp20l064) | 
-                      is.na(cp20l068) ) 
-                       )
-                       
-  
-  data_fa <- factanal(personality, factors = 5, scores="regression",  rotation = "varimax")
-  personality_factor<-data_fa$scores
-
-  factor1 <- personality_factor[1]
-    df$factor1[is.na(df$factor1)]<-999
-  factor2 <- personality_factor[2]
-    df$factor2[is.na(df$factor2)]<-999
-  factor3 <- personality_factor[3]
-    df$factor3[is.na(df$factor3)]<-999
-  factor4 <- personality_factor[4]
-    df$factor4[is.na(df$factor4)]<-999
-  factor5 <- personality_factor[5]
-    df$factor5[is.na(df$factor5)]<-999
+  #personality = subset(df, select = c(cp20l031, cp20l036, cp20l037, cp20l040, cp20l041, cp20l047, cp20l048, cp20l052, cp20l053, cp20l054, cp20l058, cp20l063, cp20l064,  cp20l068))
+  #na.omit(personality)
+  #personality <- subset(personality, 
+  #                  !(is.na(cp20l031) | 
+  #                    is.na(cp20l036) | 
+  #                    is.na(cp20l037) | 
+  #                    is.na(cp20l040) | 
+  #                    is.na(cp20l041) | 
+  #                    is.na(cp20l047) | 
+  #                    is.na(cp20l048) | 
+  #                    is.na(cp20l052) | 
+  #                    is.na(cp20l053) | 
+  #                    is.na(cp20l054) | 
+  #                    is.na(cp20l058) | 
+  #                    is.na(cp20l063) | 
+  #                    is.na(cp20l064) | 
+  #                    is.na(cp20l068) ) 
+  #                     )
+  #                     
+  #
+  #data_fa <- factanal(personality, factors = 5, scores="regression",  rotation = "varimax")
+  #personality_factor<-data_fa$scores
+  #
+  #factor1 <- personality_factor[1]
+  #  df$factor1[is.na(df$factor1)]<-999
+  #factor2 <- personality_factor[2]
+  #  df$factor2[is.na(df$factor2)]<-999
+  #factor3 <- personality_factor[3]
+  #  df$factor3[is.na(df$factor3)]<-999
+  #factor4 <- personality_factor[4]
+  #  df$factor4[is.na(df$factor4)]<-999
+  #factor5 <- personality_factor[5]
+  #  df$factor5[is.na(df$factor5)]<-999
 
   #Jessica's interpretation of the five factors, based on prior expectation/theory: 
   #Factor 1 Neurotism
@@ -330,13 +330,7 @@ clean_df <- function(df, background_df = NULL) {
                'rela_satisfied',
                'housework',            
                'relig1',
-               'sm_fa',
-               'factor1', 
-               'factor2', 
-               'factor3', 
-               'factor4', 
-               'factor5' 
-                            )  
+               'sm_fa',                            )  
   
   # Keeping data with variables selected
   df <- df[ , keepcols]
