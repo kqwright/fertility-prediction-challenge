@@ -313,7 +313,8 @@ clean_df <- function(df, background_df = NULL) {
   
   
   #Factor analysis (confirmatory, as based on the expectation of five personality traits)
-  data_fa <- factanal(complete.cases(new_df), factors = 5, scores="regression")
+  new_df2<-complete.cases(new_df)
+  data_fa <- factanal(new_df2, factors = 5, scores="regression")
   
   personality_factor<-data_fa$scores
   factor1 <- personality_factor[1]
