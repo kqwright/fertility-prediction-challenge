@@ -6,17 +6,8 @@ library(stats)
 
 #overall steps:
 #1. Read in data
-#a. read in training data and outcome
-#b. strongly advised to save datafiles separate from local repository so they are not accidently made public through a push function to GitHub
-
-
 
 #2. Preprocess data
-#total <- merge(data,outcome,by="nomem_encr")
-#total <- total[total$outcome_available==1,]
-#myvars <- c("nomem_encr", "new_child","gender_bg","migration_background_bg","age_bg","partner_2020","cf20m128", "oplmet_2020", "cr20m041", "cr20m042", "ch20m004", "ch20m219", "sted_2020", "nettohh_f_2020", "cw20m011", "cw20m012", "cw20m013", "cw20m014", "cw20m015", "cw20m016", "cw20m017", "cw20m018", "cw20m019", "cw20m020", "cw20m021", "cw20m022", "cw20m023", "cw20m024", "cw20m025", "cw20m026", "cw20m027", "ci20m383", "cf20m180", "cf20m166", "cf20m031", "ci20m006", "cd20m003", "cf18k184", "cp20l029", "cp20l030", "cp20l031", "cp20l032", "cp20l033", "cp20l034", "cp20l035", "cp20l036", "cp20l037", "cp20l038", "cp20l039", "cp20l040", "cp20l041", "cp20l042", "cp20l043", "cp20l044", "cp20l045", "cp20l046", "cp20l047", "cp20l048", "cp20l049", "cp20l050", "cp20l051", "cp20l052", "cp20l053", "cp20l054", "cp20l055", "cp20l056", "cp20l057", "cp20l058", "cp20l059", "cp20l060", "cp20l061", "cp20l062", "cp20l063", "cp20l064", "cp20l065", "cp20l066", "cp20l067", "cp20l068", "cp20l069")
-#newdata <- total[myvars]
-
 
 clean_df <- function(df, background_df = NULL) {
   # Process the input data to feed the model
@@ -124,7 +115,7 @@ clean_df <- function(df, background_df = NULL) {
 
   # Generate religiousness factor how often attend religious gatherings
   df$cr20m041[is.na(df$cr20m041)] <-999
-  df$relig1 <- "NA"
+  df$relig1 <- "5_NA"
   df[!is.na(df$cr20m041) & (df$cr20m041==1 | df$cr20m041==2 | df$cr20m041==3),]$relig1 <- "1_once_week_or_more"
   df[!is.na(df$cr20m041) & (df$cr20m041==4 | df$cr20m041==5),]$relig1 <- "2_monthly_year"
   df[!is.na(df$cr20m041) & df$cr20m041==6,]$relig1 <- "3_never"
@@ -199,123 +190,6 @@ clean_df <- function(df, background_df = NULL) {
 
   
   
-  #NEW VARIABLES ADDED
-  #logged income
-  income_log <- log(df$income)
-  
-  #GENERATE URBAN DELTA 
-  df$urban_delta <- 0
-  df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
- 
-  # Generate distance from parents
-  df$cf20m398[is.na(df$cf20m398 )] <- 999
-  df$dist_fr_parents <- "NA"
-  df$dist_fr_parents <- df$cf20m398
-  df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
-  
-  #Number of desired children
-  df$cf20m129[is.na(df$cf20m129)] <- 999
-  df$numb_child <- "NA"
-  df[!is.na(df$cf20m129) & df$cf20m129==1,]$numb_child <- "1"
-  df[!is.na(df$cf20m129) & df$cf20m129==2,]$numb_child <- "2"
-  df[!is.na(df$cf20m129) & df$cf20m129>=3,]$numb_child <- "3 or more"
-  df[!is.na(df$cf20m129) | df$cf20m129==999,]$numb_child <- "missing"
-   
-  # Currently have a partner
-  df$cf20m024[is.na(df$cf20m024)] <- 999
-  df$partner <- "NA"
-  df[!is.na(df$cf20m024) & df$cf20m024==1,]$partner <- "1_yes"
-  df[!is.na(df$cf20m024) & df$cf20m024==2,]$partner <- "2_no"
-  df[!is.na(df$cf20m024) | df$cf20m024==999,]$partner <- "missing"
-  
-  #GENERATE partner delta
-  df$partner_delta <- 0
-  df[df$cf20m024!=df$cf19l024,]$partner_delta <- 1 
-  
-  # Generate partner living type
-  df$woonvorm_2020[is.na(df$woonvorm_2020)] <- 999
-  df$partner_type <- "NA"
-  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==1,]$partner_type <- "1_single"
-  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==2,]$partner_type <- "2_coh_no_child"
-  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==3,]$partner_type <- "3_coh_w_child"
-  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==4,]$partner_type <- "4_single_w_child"
-  df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==5,]$partner_type <- "5_other"
-  df[!is.na(df$woonvorm_2020) | df$woonvorm_2020==999,]$partner_type <- "missing"
-  
-  #GENERATE partner living type delta
-  df$woonvorm_2019[is.na(df$woonvorm_2019)] <- 999
-  df$partner_type_delta <- 0
-  df[df$woonvorm_2020!=df$woonvorm_2019,]$partner_type_delta <- 1
-  
-  #Add housework   
-  df$cf18k184[is.na(df$cf18k184)] <-999
-  df$housework <- "NA"
-  df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
-  df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
-  df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
-  df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
-
-  # Generate social media factor
-  sm_df = subset(df, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
-  na.omit(sm_df)
-  sm_df <- subset(sm_df, 
-                     !(is.na(cs20m267) |
-                         is.na(cs20m277) |
-                         is.na(cs20m280) |
-                         is.na(cs20m281) )
-  )
-  
-  data_sm <- factanal(sm_df, factors = 1, scores="regression")
-  sm_fa <-sm_df$scores
-
-
-  #Generate personality factors, big five
-  #personality = subset(df, select = c(cp20l031, cp20l036, cp20l037, cp20l040, cp20l041, cp20l047, cp20l048, cp20l052, cp20l053, cp20l054, cp20l058, cp20l063, cp20l064,  cp20l068))
-  #na.omit(personality)
-  #personality <- subset(personality, 
-  #                  !(is.na(cp20l031) | 
-  #                    is.na(cp20l036) | 
-  #                    is.na(cp20l037) | 
-  #                    is.na(cp20l040) | 
-  #                    is.na(cp20l041) | 
-  #                    is.na(cp20l047) | 
-  #                    is.na(cp20l048) | 
-  #                    is.na(cp20l052) | 
-  #                    is.na(cp20l053) | 
-  #                    is.na(cp20l054) | 
-  #                    is.na(cp20l058) | 
-  #                    is.na(cp20l063) | 
-  #                    is.na(cp20l064) | 
-  #                    is.na(cp20l068) ) 
-  #                     )
-  #                     
-  #
-  #data_fa <- factanal(personality, factors = 5, scores="regression",  rotation = "varimax")
-  #personality_factor<-data_fa$scores
-  #
-  #factor1 <- personality_factor[1]
-  #  df$factor1[is.na(df$factor1)]<-999
-  #factor2 <- personality_factor[2]
-  #  df$factor2[is.na(df$factor2)]<-999
-  #factor3 <- personality_factor[3]
-  #  df$factor3[is.na(df$factor3)]<-999
-  #factor4 <- personality_factor[4]
-  #  df$factor4[is.na(df$factor4)]<-999
-  #factor5 <- personality_factor[5]
-  #  df$factor5[is.na(df$factor5)]<-999
-
-  #Jessica's interpretation of the five factors, based on prior expectation/theory: 
-  #Factor 1 Neurotism
-  #Factor 2 Extraversion
-  #Factor 3 Agreeableness
-  #Factor 4 Openness to experience
-  #Factor 5 Conscientiousness
-  
-  #Based on the p-value, this number of factors does not capture all dimensions in the data; however a different number (3-6) of factors does not seem to improve it;
-
-  # Source: https://www.geo.fu-berlin.de/en/v/soga-r/Advances-statistics/Multivariate-approaches/Factor-Analysis/A-Simple-Example-of-Factor-Analysis-in-R/index.html
-  
-  
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
                'gender_bg',
@@ -324,25 +198,16 @@ clean_df <- function(df, background_df = NULL) {
                'field_edu',
                'occupation',
                'income',
-               'income_log',
                'urban',
-               'urban_delta',
                'owner',
                'health',
                'dist_fr_parents',               
-               'next_child',
-               'numb_child',              
+               'next_child',            
                'first_birth',   
                'marriage_dur',
-               'partner',
-               'partner_delta',   
-               'partner_dur',
-               'partner_type',
-               'partner_type_delta',               
-               'rela_satisfied',
-               'housework',            
-               'relig1',
-               'sm_fa',                            )  
+               'partner',             
+               'rela_satisfied',        
+               'relig1',                           )  
   
   # Keeping data with variables selected
   df <- df[ , keepcols]
