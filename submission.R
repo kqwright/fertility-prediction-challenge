@@ -2,6 +2,7 @@
 
 
 library(data.table) 
+library(stats)
 
 
 #overall steps:
@@ -241,6 +242,20 @@ df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
 df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
 df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
 df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
+
+# Generate social media factor
+sm_df = subset(df, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
+na.omit(sm_df)
+sm_df <- subset(sm_df, 
+                !(is.na(cs20m267) |
+                    is.na(cs20m277) |
+                    is.na(cs20m280) |
+                    is.na(cs20m281) )
+)
+
+data_sm <- factanal(sm_df, factors = 1, scores="regression")
+sm_fa <-sm_df$scores
+
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
@@ -266,7 +281,8 @@ df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
                 'numb_child',
                  'partner',
                   'partner_type',
-                  'housework')  
+                  'housework',
+                  'sm_fa')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
