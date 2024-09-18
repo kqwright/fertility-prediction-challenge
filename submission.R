@@ -46,8 +46,9 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$age_bg) & (df$age_bg>=41),]$age <- "41+"
   
   # Migration as a categorical variable
+    df$migration2 <- "NA"
   df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-  df$migration2 <- "NA"
+
   df[df$migration_background_bg==0,]$migration2 <- "Dutch"
   df[df$migration_background_bg==101,]$migration2 <- "gen_1_west"
   df[df$migration_background_bg==102,]$migration2 <- "gen_1_non_west"
@@ -64,8 +65,9 @@ clean_df <- function(df, background_df = NULL) {
   #df[df$oplmet_2020==6 & !is.na(df$oplmet_2020),]$education <- "6_uni"
   #df[df$oplmet_2020==7 | is.na(df$oplmet_2020),]$education <- "7_other_missing"
 
-  df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
   df$education2 <- NA
+  df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
+
   df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education2 <- "1_prim_8_9"
   df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education2 <- "2_sec_intermed"
   df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education2 <- "3_sec_high"
@@ -95,8 +97,9 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu2 <- "teaching"
   
    # Get occupation
-  df$ci20m383[is.na(df$ci20m383)] <- 999
   df$occupation2<- "NA"
+  df$ci20m383[is.na(df$ci20m383)] <- 999
+
   df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation2 <- "employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation2 <- "self-employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation2 <- "student"
