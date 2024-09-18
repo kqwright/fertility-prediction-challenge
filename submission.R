@@ -46,13 +46,13 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$age_bg) & (df$age_bg>=41),]$age <- "41+"
   
   # Migration as a categorical variable
-  df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-  df$migr <- "NA"
-  df[df$migration_background_bg==0,]$migr <- "Dutch"
-  df[df$migration_background_bg==101,]$migr <- "gen_1_west"
-  df[df$migration_background_bg==102,]$migr <- "gen_1_non_west"
-  df[df$migration_background_bg==201,]$migr <- "gen_2_west"
-  df[df$migration_background_bg==202,]$migr <- "gen_2_non_west"
+  #df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
+  #df$migr <- "NA"
+  #df[df$migration_background_bg==0,]$migr <- "Dutch"
+  #df[df$migration_background_bg==101,]$migr <- "gen_1_west"
+  #df[df$migration_background_bg==102,]$migr <- "gen_1_non_west"
+  #df[df$migration_background_bg==201,]$migr <- "gen_2_west"
+  #df[df$migration_background_bg==202,]$migr <- "gen_2_non_west"
   
   
   # Get education level
