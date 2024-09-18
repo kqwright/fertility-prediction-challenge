@@ -13,7 +13,7 @@ train_save_model <- function(cleaned_df, outcome_df) {
   model_df <- merge(cleaned_df, outcome_df, by = "nomem_encr")
   
   # Logistic regression model
-model <- logistf (new_child ~ gender_bg*(age+migration+education+field_edu+occupation+income+urban+owner+health+dist_fr_parents+next_child+first_birth+marriage_dur+partner_dur+rela_satisfied+relig1), data = model_df) 
+model <- logistf (new_child ~ gender_bg*(age+migration2+education2+field_edu2+occupation2+income+urban+owner+health+dist_fr_parents+next_child+first_birth+marriage_dur+partner_dur+rela_satisfied+relig1), data = model_df) 
  #model <- glm(new_child ~ gender_bg*(age+migration2+education2+field_edu2+occupation2+income+owner+rela_satisfied+health+relig+urban+next_child+first_birth+partner_dur+marriage_dur), family = "binomial", data = model_df) 
 
   # Save the model
