@@ -95,11 +95,14 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu <- "teaching"
   
   # Get occupation
-  df$occupation <- "NA"
+  df$ci20m383[is.na(df$ci20m383)] <- 999
+  df$occupation <- NA
   df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation <- "employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation <- "self-employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation <- "student"
   df[!is.na(df$ci20m383) & (df$ci20m383==4 | df$ci20m383==5  | df$ci20m383==6 |df$ci20m383==8 |  df$ci20m383==9 | df$ci20m383==10 | df$ci20m383==11 | df$ci20m383==12 | df$ci20m383==13),]$occupation <- "not_employed"
+  df[!is.na(df$ci20m383) | (df$ci20m383==999),]$occupation <- "missing"
+
   
   # Get income, imput missing values with mean income
   df$income <- df$nettohh_f_2020
