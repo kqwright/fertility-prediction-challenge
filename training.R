@@ -1,4 +1,4 @@
-
+_e
 train_save_model <- function(cleaned_df, outcome_df) {
   # Trains a model using the cleaned dataframe and saves the model to a file.
   
@@ -14,7 +14,7 @@ train_save_model <- function(cleaned_df, outcome_df) {
   
   # Logistic regression model
   #model <- logistf (new_child ~ gender_bg*(age+migration+education+field_edu+occupation+income+urban+owner+health+dist_fr_parents+next_child+first_birth+marriage_dur+partner_dur+rela_satisfied+relig1), data = model_df) 
- model <- glm(new_child ~ gender_bg*(age+migration+education+occupation+owner+income+rela_satisfied+health+relig+urban+next_child+first_birth+partner_dur+marriage_dur+field_edu), family = "binomial", data = model_df) 
+ model <- glm(new_child ~ gender_bg*(age+migration+education+field_edu+occupation+income+owner+rela_satisfied+health+relig+urban+next_child+first_birth+partner_dur+marriage_dur), family = "binomial", data = model_df) 
 
   # Save the model
   saveRDS(model, "model.rds")
