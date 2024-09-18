@@ -54,44 +54,34 @@ clean_df <- function(df, background_df = NULL) {
   df[df$migration_background_bg==201,]$migration <- "gen_2_west"
   df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
 
-  #Get education
+  # Get education level
   df$education <- NA
-  df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_primary"
-  df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
-  df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education <- "3_sec_high"
-  df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
-  df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_high"  
-  df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"  
-  
-  #Get education level
-  df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
-  df$education <- NA
-  df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_primary"
-  df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
-  df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education <- "3_sec_senior"
-  df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
-  df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_senior"
-  df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
-  df[df$oplcat_2020==999 | is.na(df$oplcat_2020),]$education <- "other_missing"
+  df[(df$oplmet_2020==1 | df$oplmet_2020==8 | df$oplmet_2020==9) & !is.na(df$oplmet_2020),]$education <- "1_prim_8_9"
+  df[df$oplmet_2020==2 & !is.na(df$oplmet_2020),]$education <- "2_sec_intermed"
+  df[df$oplmet_2020==3 & !is.na(df$oplmet_2020),]$education <- "3_sec_high"
+  df[df$oplmet_2020==4 & !is.na(df$oplmet_2020),]$education <- "4_voc_intermed"
+  df[df$oplmet_2020==5 & !is.na(df$oplmet_2020),]$education <- "5_voc_high"
+  df[df$oplmet_2020==6 & !is.na(df$oplmet_2020),]$education <- "6_uni"
+  df[df$oplmet_2020==7 | is.na(df$oplmet_2020),]$education <- "7_other_missing"
   
   # Get education field
-  df$field_edu <- "NA"
-  df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu <- "general"
+  df$field_edu <- NA
+  df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu <- "other"
   df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu <- "teaching"
-  df[!is.na(df$cw20m013) & (df$cw20m013==1),]$field_edu <- "art_humanities"
-  df[!is.na(df$cw20m014) & (df$cw20m014==1),]$field_edu <- "art_humanities"
-  df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu <- "social"
-  df[!is.na(df$cw20m016) & df$cw20m016==1,]$field_edu <- "economics"
-  df[!is.na(df$cw20m017) & df$cw20m017==1,]$field_edu <- "law"
-  df[!is.na(df$cw20m018) & df$cw20m018==1,]$field_edu <- "math"
-  df[!is.na(df$cw20m019) & (df$cw20m019==1),]$field_edu <- "technology_agri"
-  df[!is.na(df$cw20m020) & (df$cw20m020==1),]$field_edu <- "technology_agri"
-  df[!is.na(df$cw20m025) & (df$cw20m025==1),]$field_edu <- "technology_agri"
+  df[!is.na(df$cw20m013) & df$cw20m013==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m014) & df$cw20m014==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m016) & df$cw20m016==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m017) & df$cw20m017==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m018) & df$cw20m018==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m019) & df$cw20m019==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m020) & df$cw20m020==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m025) & df$cw20m025==1,]$field_edu <- "other"
   df[!is.na(df$cw20m021) & df$cw20m021==1,]$field_edu <- "1_health"
-  df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu <- "personal_care"
-  df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu <- "catering"
-  df[!is.na(df$cw20m024) & (df$cw20m024==1),]$field_edu <- "transport_public_order"
-  df[!is.na(df$cw20m026) & (df$cw20m026==1),]$field_edu <- "transport_public_order"
+  df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m024) & df$cw20m024==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m026) & df$cw20m026==1,]$field_edu <- "other"
   df[!is.na(df$cw20m027) & df$cw20m027==1,]$field_edu <- "other"
   
   # Get occupation
