@@ -15,7 +15,7 @@ train_save_model <- function(cleaned_df, outcome_df) {
   # Logistic regression model
 #model <- logistf (new_child ~ gender_bg*(age+migration+education+field_edu+occupation+income+urban+owner+health+dist_fr_parents+next_child+first_birth+marriage_dur+partner_dur+rela_satisfied+relig+income_log+urban_delta), data = model_df) 
 
-model <- logistf(new_child ~ gender_bg*(age+migration+education+occupation+satisfied_own_finance+owner+income+rela_satisfied+health+relig+personality+urban+help_fr_parents+next_child+first_birth+partner_dur+marriage_dur+field_edu+income+log+urban_delta+dist_fr_parents), data = model_df) 
+model <- logistf(new_child ~ gender_bg*(age+migration+education+occupation+satisfied_own_finance+owner+income+rela_satisfied+health+relig+personality+urban+help_fr_parents+next_child+first_birth+partner_dur+marriage_dur+field_edu+income_log+urban_delta+dist_fr_parents), data = model_df) 
 
 
   
