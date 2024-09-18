@@ -47,13 +47,13 @@ clean_df <- function(df, background_df = NULL) {
   
   # Migration as a categorical variable
   df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-  df$migration <- NA
+  df$migration <- "NA"
   df[df$migration_background_bg==0,]$migration <- "Dutch"
   df[df$migration_background_bg==101,]$migration <- "gen_1_west"
   df[df$migration_background_bg==102,]$migration <- "gen_1_non_west"
   df[df$migration_background_bg==201,]$migration <- "gen_2_west"
   df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
-
+  
   # Get education level
   df$education <- NA
   df[(df$oplmet_2020==1 | df$oplmet_2020==8 | df$oplmet_2020==9) & !is.na(df$oplmet_2020),]$education <- "1_prim_8_9"
@@ -96,13 +96,13 @@ clean_df <- function(df, background_df = NULL) {
   df[is.na(df$nettohh_f_2020),]$income <-  mean(df$nettohh_f_2020, na.rm=TRUE)
   
   # Add how satisfied individuals are with their finances
-  #df$satisfied_own_finance <- "NA"
-  #df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
-  #df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
-  #df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
-  #df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
-  #df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
-  #df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
+  df$satisfied_own_finance <- "NA"
+  df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
+  df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
+  df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
+  df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
+  df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
+  df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
   
   # Add whether the respondent is an owner of its current dwelling
   df$owner <- "NA"
@@ -135,11 +135,11 @@ clean_df <- function(df, background_df = NULL) {
   # Generate personality
   #df[is.na(df$cp20l026),]$cp20l026 <- "999"
   #df[is.na(df$cp20l023),]$cp20l023 <- "999"
-  #df$personality <- "NA"
-  #df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
-  #df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "more_social_less_stressed"
-  #df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "less_social_more_stressed"
-  #df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
+  df$personality <- "NA"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "more_social_less_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "less_social_more_stressed"
+  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
   
   # Generate living arrangement
   df$urban <- "6_NA"
@@ -150,12 +150,12 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_not_urban"
   
   # Generate help from parents
-  #df[is.na(df$cf20m134),]$cf20m134 <- "999"
-  #df[is.na(df$cf20m133),]$cf20m133 <- "999"
-  #df$help_fr_parents <- "NA"
-  #df[(df$cf20m134==3 | df$cf20m133==3),]$help_fr_parents <- "several_times"
-  #df[(df$cf20m134==2 | df$cf20m133==2) & (df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "once_twice"
-  #df[(df$cf20m134==1 | df$cf20m133==1) & (df$cf20m134!=2 & df$cf20m133!=2 & df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "never"
+  df[is.na(df$cf20m134),]$cf20m134 <- "999"
+  df[is.na(df$cf20m133),]$cf20m133 <- "999"
+  df$help_fr_parents <- "NA"
+  df[(df$cf20m134==3 | df$cf20m133==3),]$help_fr_parents <- "several_times"
+  df[(df$cf20m134==2 | df$cf20m133==2) & (df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "once_twice"
+  df[(df$cf20m134==1 | df$cf20m133==1) & (df$cf20m134!=2 & df$cf20m133!=2 & df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "never"
   
   # Generate fertility intentions 
   df$cf20m130[is.na(df$cf20m130)] <- 999
@@ -207,11 +207,14 @@ clean_df <- function(df, background_df = NULL) {
                'field_edu',
                'occupation',
                'income',
+               'satisfied_own_finance',
                'owner',
                'rela_satisfied',
                'health',
                'relig',
+               'personality',
                'urban',
+               'help_fr_parents',
                'next_child',
                'first_birth',
                'partner_dur',
