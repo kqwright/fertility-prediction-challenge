@@ -205,7 +205,7 @@ income_log <- log(df$income)
 
 #GENERATE URBAN DELTA 
 df$urban_delta <- "NA"
-$urban_delta <- 0
+df$urban_delta <- 0
 df[df$sted_2020!=df$sted_2019 & is.na(df$sted_2020) & is.na(df$sted_2019,]$urban_delta <- 1 
 
 # Generate distance from parents
