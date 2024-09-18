@@ -47,12 +47,12 @@ clean_df <- function(df, background_df = NULL) {
   
   # Migration as a categorical variable
   df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-  df$migration <- "NA"
-  df[df$migration_background_bg==0,]$migration <- "Dutch"
-  df[df$migration_background_bg==101,]$migration <- "gen_1_west"
-  df[df$migration_background_bg==102,]$migration <- "gen_1_non_west"
-  df[df$migration_background_bg==201,]$migration <- "gen_2_west"
-  df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
+  df$migration2 <- "NA"
+  df[df$migration_background_bg==0,]$migration2 <- "Dutch"
+  df[df$migration_background_bg==101,]$migration2 <- "gen_1_west"
+  df[df$migration_background_bg==102,]$migration2 <- "gen_1_non_west"
+  df[df$migration_background_bg==201,]$migration2 <- "gen_2_west"
+  df[df$migration_background_bg==202,]$migration2 <- "gen_2_non_west"
   
   # Get education level
   #df$education <- NA
@@ -65,44 +65,43 @@ clean_df <- function(df, background_df = NULL) {
   #df[df$oplmet_2020==7 | is.na(df$oplmet_2020),]$education <- "7_other_missing"
 
   df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
-  df$education <- NA
-  df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_prim_8_9"
-  df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
-  df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education <- "3_sec_high"
-  df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
-  df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_high"
-  df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
-  df[df$oplcat_2020==999 | is.na(df$oplcat_2020),]$education <- "7_other_missing"
+  df$education2 <- NA
+  df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education2 <- "1_prim_8_9"
+  df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education2 <- "2_sec_intermed"
+  df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education2 <- "3_sec_high"
+  df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education2 <- "4_voc_intermed"
+  df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education2 <- "5_voc_high"
+  df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education2 <- "6_uni"
+  df[df$oplcat_2020==999 | is.na(df$oplcat_2020),]$education2 <- "7_other_missing"
   
   # Get education field
-  df$field_edu <- NA
-  df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m013) & df$cw20m013==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m014) & df$cw20m014==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m016) & df$cw20m016==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m017) & df$cw20m017==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m018) & df$cw20m018==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m019) & df$cw20m019==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m020) & df$cw20m020==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m025) & df$cw20m025==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m024) & df$cw20m024==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m026) & df$cw20m026==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m027) & df$cw20m027==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m021) & df$cw20m021==1,]$field_edu <- "1_health"
-  df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu <- "teaching"
+  df$field_edu2 <- NA
+  df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m013) & df$cw20m013==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m014) & df$cw20m014==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m016) & df$cw20m016==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m017) & df$cw20m017==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m018) & df$cw20m018==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m019) & df$cw20m019==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m020) & df$cw20m020==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m025) & df$cw20m025==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m024) & df$cw20m024==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m026) & df$cw20m026==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m027) & df$cw20m027==1,]$field_edu2 <- "other"
+  df[!is.na(df$cw20m021) & df$cw20m021==1,]$field_edu2 <- "1_health"
+  df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu2 <- "teaching"
   
-  # Get occupation
+   # Get occupation
   df$ci20m383[is.na(df$ci20m383)] <- 999
-  df$occupation <- NA
-  df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation <- "employed"
-  df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation <- "self-employed"
-  df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation <- "student"
-  df[!is.na(df$ci20m383) & (df$ci20m383==4 | df$ci20m383==5  | df$ci20m383==6 |df$ci20m383==8 |  df$ci20m383==9 | df$ci20m383==10 | df$ci20m383==11 | df$ci20m383==12 | df$ci20m383==13),]$occupation <- "not_employed"
-  df[!is.na(df$ci20m383) | (df$ci20m383==999),]$occupation <- "missing"
-
+  df$occupation2<- "NA"
+  df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation2 <- "employed"
+  df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation2 <- "self-employed"
+  df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation2 <- "student"
+  df[!is.na(df$ci20m383) & (df$ci20m383==4 | df$ci20m383==5  | df$ci20m383==6 |df$ci20m383==8 |  df$ci20m383==9 | df$ci20m383==10 | df$ci20m383==11 | df$ci20m383==12 | df$ci20m383==13),]$occupation2 <- "not_employed"
+  df[!is.na(df$ci20m383) | (df$ci20m383==999),]$occupation2 <- "missing"
   
   # Get income, imput missing values with mean income
   df$income <- df$nettohh_f_2020
