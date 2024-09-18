@@ -67,7 +67,6 @@ clean_df <- function(df, background_df = NULL) {
   # Get education field
   df$field_edu <- NA
   df[!is.na(df$cw20m011) & df$cw20m011==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu <- "teaching"
   df[!is.na(df$cw20m013) & df$cw20m013==1,]$field_edu <- "other"
   df[!is.na(df$cw20m014) & df$cw20m014==1,]$field_edu <- "other"
   df[!is.na(df$cw20m015) & df$cw20m015==1,]$field_edu <- "other"
@@ -77,12 +76,13 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cw20m019) & df$cw20m019==1,]$field_edu <- "other"
   df[!is.na(df$cw20m020) & df$cw20m020==1,]$field_edu <- "other"
   df[!is.na(df$cw20m025) & df$cw20m025==1,]$field_edu <- "other"
-  df[!is.na(df$cw20m021) & df$cw20m021==1,]$field_edu <- "1_health"
   df[!is.na(df$cw20m022) & df$cw20m022==1,]$field_edu <- "other"
   df[!is.na(df$cw20m023) & df$cw20m023==1,]$field_edu <- "other"
   df[!is.na(df$cw20m024) & df$cw20m024==1,]$field_edu <- "other"
   df[!is.na(df$cw20m026) & df$cw20m026==1,]$field_edu <- "other"
   df[!is.na(df$cw20m027) & df$cw20m027==1,]$field_edu <- "other"
+  df[!is.na(df$cw20m021) & df$cw20m021==1,]$field_edu <- "1_health"
+  df[!is.na(df$cw20m012) & df$cw20m012==1,]$field_edu <- "teaching"
   
   # Get occupation
   df$occupation <- "NA"
