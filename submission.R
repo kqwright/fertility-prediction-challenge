@@ -202,6 +202,11 @@ clean_df <- function(df, background_df = NULL) {
 #NEW VARIABLES ADDED
 #logged income
 income_log <- log(df$income)
+
+#GENERATE URBAN DELTA 
+df$urban_delta <- 0
+df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
+
   
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
@@ -224,7 +229,8 @@ income_log <- log(df$income)
                'first_birth',
                'partner_dur',
                'marriage_dur',
-                'income_log')  
+                'income_log',
+                'urban_delta')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
