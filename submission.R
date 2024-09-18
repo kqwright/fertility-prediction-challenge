@@ -94,16 +94,7 @@ clean_df <- function(df, background_df = NULL) {
   # Get income, imput missing values with mean income
   df$income <- df$nettohh_f_2020
   df[is.na(df$nettohh_f_2020),]$income <-  mean(df$nettohh_f_2020, na.rm=TRUE)
-  
-  # Add how satisfied individuals are with their finances
-  df$satisfied_own_finance <- "NA"
-  df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
-  
+    
   # Add whether the respondent is an owner of its current dwelling
   df$owner <- "NA"
   df[!is.na(df$cd20m003) & (df$cd20m003==1 |df$cd20m003==2 | df$cd20m003==4),]$owner <- "1_no"
@@ -132,15 +123,6 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cr20m041) & (df$cr20m041==5) ,]$relig <- ">2_few_per_year"
   df[!is.na(df$cr20m041) & (df$cr20m041==6) ,]$relig <- "1_never"
   
-  # Generate personality
-  #df[is.na(df$cp20l026),]$cp20l026 <- "999"
-  #df[is.na(df$cp20l023),]$cp20l023 <- "999"
-  df$personality <- "NA"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "less_social_less_stressed"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==1 | df$cp20l023==2 | df$cp20l023==3),]$personality <- "more_social_less_stressed"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==1 | df$cp20l026==2 | df$cp20l026==3) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "less_social_more_stressed"
-  df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
-  
   # Generate living arrangement
   df$urban <- "6_NA"
   df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extreme_urban"
@@ -148,15 +130,7 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$sted_2020) & df$sted_2020==3,]$urban <- "3_mod_urban"
   df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slight_urban"
   df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_not_urban"
-  
-  # Generate help from parents
-  df[is.na(df$cf20m134),]$cf20m134 <- "999"
-  df[is.na(df$cf20m133),]$cf20m133 <- "999"
-  df$help_fr_parents <- "NA"
-  df[(df$cf20m134==3 | df$cf20m133==3),]$help_fr_parents <- "several_times"
-  df[(df$cf20m134==2 | df$cf20m133==2) & (df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "once_twice"
-  df[(df$cf20m134==1 | df$cf20m133==1) & (df$cf20m134!=2 & df$cf20m133!=2 & df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "never"
-  
+    
   # Generate fertility intentions 
   df$cf20m130[is.na(df$cf20m130)] <- 999
   df$cf20m128[is.na(df$cf20m128)] <- 999
@@ -207,14 +181,11 @@ clean_df <- function(df, background_df = NULL) {
                'field_edu',
                'occupation',
                'income',
-               'satisfied_own_finance',
                'owner',
                'rela_satisfied',
                'health',
                'relig',
-               'personality',
                'urban',
-               'help_fr_parents',
                'next_child',
                'first_birth',
                'partner_dur',
@@ -229,39 +200,6 @@ clean_df <- function(df, background_df = NULL) {
   return(df)
 }
 
-
-
-#####################
-
-#train_save_model <- function(cleaned_df, outcome_df) {
-# Trains a model using the cleaned dataframe and saves the model to a file.
-
-# Parameters:
-# cleaned_df (dataframe): The cleaned data from clean_df function to be used for training the model.
-# outcome_df (dataframe): The data with the outcome variable (e.g., from PreFer_train_outcome.csv or PreFer_fake_outcome.csv).
-
-## This script contains a bare minimum working example
-# set.seed(1) # not useful here because logistic regression deterministic
-
-# Combine cleaned_df and outcome_df
-#model_df <- merge(cleaned_df, outcome_df, by = "nomem_encr")
-
-# Logistic regression model
-#model <- glm(new_child ~ gender_bg*(age+migration+education+occupation+satisfied_own_finance+owner+income+rela_satisfied+health+relig+personality+urban+help_fr_parents+next_child+first_birth+partner_dur+marriage_dur+field_edu), family = "binomial", data = model_df) 
-
-# Save the model
-#saveRDS(model, "model.rds")
-#}
-
-
-###############
-
-#setwd("Z:/PreFer/") 
-
-#train_cleaned <- clean_df(train)
-
-# training and saving the model
-#train_save_model(train_cleaned, outcome)
 
 
 ###############################
