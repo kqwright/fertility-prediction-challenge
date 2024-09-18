@@ -46,14 +46,15 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$age_bg) & (df$age_bg>=41),]$age <- "41+"
   
   # Migration as a categorical variable
-    df$migration2 <- "NA"
-  df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-
+  df$migration2 <- "NA"
+  df[is.na(df$migration_background_bg),]$migration_background_bg <- "999"
   df[df$migration_background_bg==0,]$migration2 <- "Dutch"
   df[df$migration_background_bg==101,]$migration2 <- "gen_1_west"
   df[df$migration_background_bg==102,]$migration2 <- "gen_1_non_west"
   df[df$migration_background_bg==201,]$migration2 <- "gen_2_west"
   df[df$migration_background_bg==202,]$migration2 <- "gen_2_non_west"
+  df[df$migration_background_bg==999 | is.na(df$migration_background_bg),]$migration2 <- "missing"
+
   
   # Get education level
   #df$education <- NA
@@ -66,8 +67,7 @@ clean_df <- function(df, background_df = NULL) {
   #df[df$oplmet_2020==7 | is.na(df$oplmet_2020),]$education <- "7_other_missing"
 
   df$education2 <- NA
-  df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
-
+  df[is.na(df$oplcat_2020),]$oplcat_2020 <- "999" 
   df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education2 <- "1_prim_8_9"
   df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education2 <- "2_sec_intermed"
   df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education2 <- "3_sec_high"
@@ -246,46 +246,8 @@ clean_df <- function(df, background_df = NULL) {
 
 
 
-#####################
-
-#train_save_model <- function(cleaned_df, outcome_df) {
-# Trains a model using the cleaned dataframe and saves the model to a file.
-
-# Parameters:
-# cleaned_df (dataframe): The cleaned data from clean_df function to be used for training the model.
-# outcome_df (dataframe): The data with the outcome variable (e.g., from PreFer_train_outcome.csv or PreFer_fake_outcome.csv).
-
-## This script contains a bare minimum working example
-# set.seed(1) # not useful here because logistic regression deterministic
-
-# Combine cleaned_df and outcome_df
-#model_df <- merge(cleaned_df, outcome_df, by = "nomem_encr")
-
-# Logistic regression model
-#model <- glm(new_child ~ gender_bg*(age+migration+education+occupation+satisfied_own_finance+owner+income+rela_satisfied+health+relig+personality+urban+help_fr_parents+next_child+first_birth+partner_dur+marriage_dur+field_edu), family = "binomial", data = model_df) 
-
-# Save the model
-#saveRDS(model, "model.rds")
-#}
-
-
-###############
-
-#setwd("Z:/PreFer/") 
-
-#train_cleaned <- clean_df(train)
-
-# training and saving the model
-#train_save_model(train_cleaned, outcome)
-
 
 ###############################
-#setwd("Z:/PreFer/other_data/") 
-
-
-#fake <- data.table::fread("PreFer_fake_data.csv",
-#                          keepLeadingZeros = TRUE, # if FALSE adds zeroes to some dates
-#                          data.table = FALSE)
 
 predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds"){
   # Generate predictions using the saved model and the input dataframe.
