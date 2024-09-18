@@ -47,7 +47,7 @@ clean_df <- function(df, background_df = NULL) {
   
   # Migration as a categorical variable
   df$migration_background_bg[is.na(df$migration_background_bg)] <- 999
-  df$migration <- "NA"
+  df$migration <- NA
   df[df$migration_background_bg==0,]$migration <- "Dutch"
   df[df$migration_background_bg==101,]$migration <- "gen_1_west"
   df[df$migration_background_bg==102,]$migration <- "gen_1_non_west"
