@@ -1,4 +1,4 @@
-_e
+
 train_save_model <- function(cleaned_df, outcome_df) {
   # Trains a model using the cleaned dataframe and saves the model to a file.
   
