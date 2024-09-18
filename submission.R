@@ -208,6 +208,16 @@ df$dist_fr_parents <- df$cf20m398
 df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
 
   
+#Number of desired children
+df$cf20m129[is.na(df$cf20m129)] <- 999
+df$numb_child <- "NA"
+df[!is.na(df$cf20m129) & df$cf20m129==1,]$numb_child <- "1"
+df[!is.na(df$cf20m129) & df$cf20m129==2,]$numb_child <- "2"
+df[!is.na(df$cf20m129) & df$cf20m129>=3,]$numb_child <- "3 or more"
+df[!is.na(df$cf20m129) | df$cf20m129==999,]$numb_child <- "missing"
+
+
+  
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
                'gender_bg',
@@ -228,7 +238,8 @@ df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
                'first_birth',
                'partner_dur',
                'marriage_dur',
-                'dist_fr_parents')  
+                'dist_fr_parents',
+                'numb_child')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
