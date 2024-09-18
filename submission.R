@@ -207,7 +207,12 @@ income_log <- log(df$income)
 df$urban_delta <- 0
 df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
 
-  
+# Generate distance from parents
+df$cf20m398[is.na(df$cf20m398 )] <- 999
+df$dist_fr_parents <- "NA"
+df$dist_fr_parents <- df$cf20m398
+df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
+
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
@@ -230,7 +235,8 @@ df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1
                'partner_dur',
                'marriage_dur',
                 'income_log',
-                'urban_delta')  
+                'urban_delta',
+                'dist_fr_parents')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
