@@ -215,7 +215,6 @@ clean_df <- function(df, background_df = NULL) {
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
                'gender_bg',
-               'migr',
                'edu',
                'edu_field',
                'occup',
