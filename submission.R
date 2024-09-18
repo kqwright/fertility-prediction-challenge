@@ -208,7 +208,7 @@ df$sted_2020[is.na(df$sted_2020)] <- 999
 df$sted_2019[is.na(df$sted_2019)] <- 999
 df$urban_delta <- "NA"
 df$urban_delta <- 0
-df[df$sted_2020!=df$sted_2019),]$urban_delta <- 1 
+df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
 df[df$sted_2020==999,]$urban_delta <- "NA"
 df[df$sted_2019==999,]$urban_delta <- "NA"
 
