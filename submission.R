@@ -216,7 +216,12 @@ df[!is.na(df$cf20m129) & df$cf20m129==2,]$numb_child <- "2"
 df[!is.na(df$cf20m129) & df$cf20m129>=3,]$numb_child <- "3 or more"
 df[!is.na(df$cf20m129) | df$cf20m129==999,]$numb_child <- "missing"
 
-
+# Currently have a partner
+df$cf20m024[is.na(df$cf20m024)] <- 999
+df$partner <- "NA"
+df[!is.na(df$cf20m024) & df$cf20m024==1,]$partner <- "1_yes"
+df[!is.na(df$cf20m024) & df$cf20m024==2,]$partner <- "2_no"
+df[!is.na(df$cf20m024) | df$cf20m024==999,]$partner <- "missing"
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
@@ -239,7 +244,8 @@ df[!is.na(df$cf20m129) | df$cf20m129==999,]$numb_child <- "missing"
                'partner_dur',
                'marriage_dur',
                 'dist_fr_parents',
-                'numb_child')  
+                'numb_child',
+                 'partner')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
