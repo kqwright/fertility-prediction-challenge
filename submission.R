@@ -222,6 +222,25 @@ df$partner <- "NA"
 df[!is.na(df$cf20m024) & df$cf20m024==1,]$partner <- "1_yes"
 df[!is.na(df$cf20m024) & df$cf20m024==2,]$partner <- "2_no"
 df[!is.na(df$cf20m024) | df$cf20m024==999,]$partner <- "missing"
+
+  # Generate partner living type
+df$woonvorm_2020[is.na(df$woonvorm_2020)] <- 999
+df$partner_type <- "NA"
+df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==1,]$partner_type <- "1_single"
+df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==2,]$partner_type <- "2_coh_no_child"
+df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==3,]$partner_type <- "3_coh_w_child"
+df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==4,]$partner_type <- "4_single_w_child"
+df[!is.na(df$woonvorm_2020) & df$woonvorm_2020==5,]$partner_type <- "5_other"
+df[!is.na(df$woonvorm_2020) | df$woonvorm_2020==999,]$partner_type <- "missing"
+
+
+#Add housework   
+df$cf18k184[is.na(df$cf18k184)] <-999
+df$housework <- "NA"
+df[!is.na(df$cf18k184) & df$cf18k184==1,]$housework <- "1_practically_never"
+df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
+df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
+df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
@@ -245,7 +264,9 @@ df[!is.na(df$cf20m024) | df$cf20m024==999,]$partner <- "missing"
                'marriage_dur',
                 'dist_fr_parents',
                 'numb_child',
-                 'partner')  
+                 'partner',
+                  'partner_type',
+                  'housework')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
