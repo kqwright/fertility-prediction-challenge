@@ -96,15 +96,6 @@ clean_df <- function(df, background_df = NULL) {
   df$income <- df$nettohh_f_2020
   df[is.na(df$nettohh_f_2020),]$income <-  mean(df$nettohh_f_2020, na.rm=TRUE)
   
-  # Add how satisfied individuals are with their finances
-  df$satisfied_own_finance <- "NA"
-  df[!is.na(df$ci20m006) & (df$ci20m006==0 | df$ci20m006==1 | df$ci20m006==2 | df$ci20m006==3),]$satisfied_own_finance <- "0123_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==4 | df$ci20m006==5),]$satisfied_own_finance <- "45_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==6),]$satisfied_own_finance <- "6_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==7),]$satisfied_own_finance <- "7_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==8),]$satisfied_own_finance <- "8_satisfied"
-  df[!is.na(df$ci20m006) & (df$ci20m006==9 | df$ci20m006==10),]$satisfied_own_finance <- "910_satisfied"
-  
   # Add whether the respondent is an owner of its current dwelling
   df$owner <- "NA"
   df[!is.na(df$cd20m003) & (df$cd20m003==1 |df$cd20m003==2 | df$cd20m003==4),]$owner <- "1_no"
@@ -150,14 +141,7 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slight_urban"
   df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_not_urban"
   
-  # Generate help from parents
-  df[is.na(df$cf20m134),]$cf20m134 <- "999"
-  df[is.na(df$cf20m133),]$cf20m133 <- "999"
-  df$help_fr_parents <- "NA"
-  df[(df$cf20m134==3 | df$cf20m133==3),]$help_fr_parents <- "several_times"
-  df[(df$cf20m134==2 | df$cf20m133==2) & (df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "once_twice"
-  df[(df$cf20m134==1 | df$cf20m133==1) & (df$cf20m134!=2 & df$cf20m133!=2 & df$cf20m134!=3 & df$cf20m133!=3),]$help_fr_parents <- "never"
-  
+ 
   # Generate fertility intentions 
   df$cf20m130[is.na(df$cf20m130)] <- 999
   df$cf20m128[is.na(df$cf20m128)] <- 999
@@ -243,19 +227,6 @@ df[!is.na(df$cf18k184) & df$cf18k184==2,]$housework <- "2_occasionally"
 df[!is.na(df$cf18k184) & df$cf18k184==3,]$housework <- "3_often"
 df[!is.na(df$cf18k184) | df$cf18k184==999,]$housework <- "missing"
 
-# Generate social media factor
-sm_df = subset(df, select = c(cs20m267, cs20m277, cs20m280, cs20m281))
-na.omit(sm_df)
-sm_df <- subset(sm_df, 
-                !(is.na(cs20m267) |
-                    is.na(cs20m277) |
-                    is.na(cs20m280) |
-                    is.na(cs20m281) )
-)
-
-data_sm <- factanal(sm_df, factors = 1, scores="regression")
-sm_fa <-sm_df$scores
-
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
                'age', 
@@ -265,14 +236,12 @@ sm_fa <-sm_df$scores
                'field_edu',
                'occupation',
                'income',
-               'satisfied_own_finance',
                'owner',
                'rela_satisfied',
                'health',
                'relig',
                'personality',
                'urban',
-               'help_fr_parents',
                'next_child',
                'first_birth',
                'partner_dur',
@@ -281,8 +250,7 @@ sm_fa <-sm_df$scores
                 'numb_child',
                  'partner',
                   'partner_type',
-                  'housework',
-                  'sm_fa')  
+                  'housework')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
