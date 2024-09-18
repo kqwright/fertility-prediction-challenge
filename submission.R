@@ -197,6 +197,11 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m031>=2009 & df$cf20m031<=2013,]$marriage_dur <- "2009_2013"
   df[df$cf20m031<=2008,]$marriage_dur <- "_2008"
   df[df$cf20m031==999,]$marriage_dur <- "NA"
+
+
+#NEW VARIABLES ADDED
+#logged income
+income_log <- log(df$income)
   
   
   keepcols = c('nomem_encr', # ID variable required for predictions,
@@ -218,7 +223,8 @@ clean_df <- function(df, background_df = NULL) {
                'next_child',
                'first_birth',
                'partner_dur',
-               'marriage_dur')  
+               'marriage_dur',
+                'income_log')  
   
   # Keeping data with variables selected
   df <- df[ , keepcols ]
