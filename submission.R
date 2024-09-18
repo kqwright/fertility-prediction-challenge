@@ -54,7 +54,7 @@ clean_df <- function(df, background_df = NULL) {
   df[df$migration_background_bg==201,]$migration <- "gen_2_west"
   df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
   
-  # Get education level
+  #Get education level
   df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
   df$education <- NA
   df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_primary"
@@ -64,7 +64,6 @@ clean_df <- function(df, background_df = NULL) {
   df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_senior"
   df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
   df[df$oplcat_2020==999 | is.na(df$oplcat_2020),]$education <- "other_missing"
-  
   
   # Get education field
   df$field_edu <- NA
@@ -87,13 +86,11 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cw20m027) & df$cw20m027==1,]$field_edu <- "other"
   
   # Get occupation
-    df$ci20m383[is.na(df$ci20m383)] <- 999
-  df$occupation <- NA
+  df$occupation <- "NA"
   df[!is.na(df$ci20m383) & (df$ci20m383==1 | df$ci20m383==2),]$occupation <- "employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==3),]$occupation <- "self-employed"
   df[!is.na(df$ci20m383) & (df$ci20m383==7),]$occupation <- "student"
   df[!is.na(df$ci20m383) & (df$ci20m383==4 | df$ci20m383==5  | df$ci20m383==6 |df$ci20m383==8 |  df$ci20m383==9 | df$ci20m383==10 | df$ci20m383==11 | df$ci20m383==12 | df$ci20m383==13),]$occupation <- "not_employed"
-  df[!is.na(df$ci20m383) | (df$ci20m383==999),]$occupation <- "missing"
   
   # Get income, imput missing values with mean income
   df$income <- df$nettohh_f_2020
@@ -113,9 +110,7 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cd20m003) & (df$cd20m003==1 |df$cd20m003==2 | df$cd20m003==4),]$owner <- "1_no"
   df[!is.na(df$cd20m003) & df$cd20m003==3,]$owner <- "2_yes"
   
- # Generate relationship satisfaction
-  df$cf20m180[is.na(df$cf20m180)] <-999
-  df$cf20m166[is.na(df$cf20m166)] <-999
+  # Generate relationship satisfaction
   df$rela_satisfied <- "8_NA"
   df[!is.na(df$cf20m166) & df$cf20m166<=4,]$rela_satisfied <- "7_single_dissatisfied"
   df[!is.na(df$cf20m166) & df$cf20m166>=5 & df$cf20m166<=7,]$rela_satisfied <- "6_single_neutral"
@@ -123,26 +118,20 @@ clean_df <- function(df, background_df = NULL) {
   df[!is.na(df$cf20m180) & df$cf20m180<=6,]$rela_satisfied <- "3_relation_less_satisfied"
   df[!is.na(df$cf20m180) & df$cf20m180>=7 & df$cf20m180<=8,]$rela_satisfied <- "2_relation_satisfied"
   df[!is.na(df$cf20m180) & df$cf20m180>=9,]$rela_satisfied <- "1_relation_very_satisfied"
-  df[!is.na(df$cf20m166) | df$cf20m166==999, !is.na(df$cf20m180) | df$cf20m180==999]$rela_satisfied  <- "missing"
-  
   
   # Generate health
-  df$ch20m004[is.na(df$ch20m004 )] <- 999
   df$health <- "NA"
   df[!is.na(df$ch20m004) & (df$ch20m004==1 | df$ch20m004==2),]$health <- "12_poor_moderate"
   df[!is.na(df$ch20m004) & df$ch20m004==3,]$health <- "3_good"
   df[!is.na(df$ch20m004) & df$ch20m004==4,]$health <- "4_very_good"
   df[!is.na(df$ch20m004) & df$ch20m004==5,]$health <- "5_excellent"
-  df[!is.na(df$ch20m004) | df$ch20m004==999,]$health <- "missing"
   
   # Generate religiousness
-  df$cr20m041[is.na(df$cr20m041)] <-999
   df$relig <- "5_NA"
   df[!is.na(df$cr20m041) & (df$cr20m041==1 | df$cr20m041==2 | df$cr20m041==3) ,]$relig <- "4_>once_week"
   df[!is.na(df$cr20m041) & (df$cr20m041==4) ,]$relig <- ">3_once_month"
   df[!is.na(df$cr20m041) & (df$cr20m041==5) ,]$relig <- ">2_few_per_year"
   df[!is.na(df$cr20m041) & (df$cr20m041==6) ,]$relig <- "1_never"
-  df[!is.na(df$cr20m041) | df$cr20m041==999,]$relig1 <- "missing"
   
   # Generate personality
   #df[is.na(df$cp20l026),]$cp20l026 <- "999"
@@ -154,15 +143,12 @@ clean_df <- function(df, background_df = NULL) {
   #df[!is.na(df$cp20l026) & !is.na(df$cp20l023) & (df$cp20l026==4 | df$cp20l026==5) & (df$cp20l023==4 | df$cp20l023==5),]$personality <- "more_social_more_stressed"
   
   # Generate living arrangement
-  df$sted_2020[is.na(df$sted_2020)] <- 999  
-  df$sted_2019[is.na(df$sted_2019)] <- 999  
-  df$urban <- "NA"
-  df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extremely urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==2,]$urban <- "2_very urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==3,]$urban <- "3_moderately urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slightly urban"
-  df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_slightly urban"
-  df[!is.na(df$sted_2020) | df$sted_2020==999,]$urban <- "missing"
+  df$urban <- "6_NA"
+  df[!is.na(df$sted_2020) & df$sted_2020==1,]$urban <- "1_extreme_urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==2,]$urban <- "2_very_urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==3,]$urban <- "3_mod_urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==4,]$urban <- "4_slight_urban"
+  df[!is.na(df$sted_2020) & df$sted_2020==5,]$urban <- "5_not_urban"
   
   # Generate help from parents
   #df[is.na(df$cf20m134),]$cf20m134 <- "999"
@@ -179,7 +165,7 @@ clean_df <- function(df, background_df = NULL) {
   df[df$cf20m130<=1,]$next_child <- "<1_year"
   df[df$cf20m130>=2 & df$cf20m130<=3,]$next_child <- "2_3_year"
   df[df$cf20m130>=4,]$next_child <- ">4_year"
-  df[df$cf20m130==999,]$next_child <- "missing"
+  df[df$cf20m130==999,]$next_child <- "NA"
   df[df$cf20m128==2,]$next_child <- "no"
   
   # First birth
@@ -227,7 +213,6 @@ clean_df <- function(df, background_df = NULL) {
                'health',
                'relig',
                'urban',
-               'help_fr_parents',
                'next_child',
                'first_birth',
                'partner_dur',
@@ -337,3 +322,5 @@ predict_outcomes <- function(df, background_df = NULL, model_path = "./model.rds
 }
 
 
+
+###################################
