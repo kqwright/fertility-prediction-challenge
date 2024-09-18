@@ -56,13 +56,13 @@ clean_df <- function(df, background_df = NULL) {
   
   # Get education level
   df$education <- NA
-  df[(df$oplmet_2020==1 | df$oplmet_2020==8 | df$oplmet_2020==9) & !is.na(df$oplmet_2020),]$education <- "1_prim_8_9"
-  df[df$oplmet_2020==2 & !is.na(df$oplmet_2020),]$education <- "2_sec_intermed"
-  df[df$oplmet_2020==3 & !is.na(df$oplmet_2020),]$education <- "3_sec_high"
-  df[df$oplmet_2020==4 & !is.na(df$oplmet_2020),]$education <- "4_voc_intermed"
-  df[df$oplmet_2020==5 & !is.na(df$oplmet_2020),]$education <- "5_voc_high"
-  df[df$oplmet_2020==6 & !is.na(df$oplmet_2020),]$education <- "6_uni"
-  df[df$oplmet_2020==7 | is.na(df$oplmet_2020),]$education <- "7_other_missing"
+  df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_prim_8_9"
+  df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
+  df[df$oplcat_2020==3 & !is.na(df$oplcat_2020),]$education <- "3_sec_high"
+  df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
+  df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_high"
+  df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"
+  df[df$oplcat_2020==7 | is.na(df$oplcat_2020),]$education <- "7_other_missing"
   
   # Get education field
   df$field_edu <- "NA"
@@ -201,8 +201,10 @@ clean_df <- function(df, background_df = NULL) {
 
 #NEW VARIABLES ADDED
 #logged income
-income_log <- log(df$income)
+income_log <- log(df$nettohh_f_2020)
+df[is.na(df$nettohh_f_2020),]$income_log <-  log(mean(df$nettohh_f_2020, na.rm=TRUE))
 
+  
 #GENERATE URBAN DELTA 
 df$sted_2020[is.na(df$sted_2020)] <- 999
 df$sted_2019[is.na(df$sted_2019)] <- 999
