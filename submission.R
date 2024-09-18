@@ -200,19 +200,6 @@ clean_df <- function(df, background_df = NULL) {
 
 
 #NEW VARIABLES ADDED
-#logged income
-income_log <- log(df$nettohh_f_2020)
-df[is.na(df$nettohh_f_2020),]$income_log <-  log(mean(df$nettohh_f_2020, na.rm=TRUE))
-
-  
-#GENERATE URBAN DELTA 
-df$sted_2020[is.na(df$sted_2020)] <- 999
-df$sted_2019[is.na(df$sted_2019)] <- 999
-df$urban_delta <- "NA"
-df$urban_delta <- 0
-df[df$sted_2020!=df$sted_2019,]$urban_delta <- 1 
-df[df$sted_2020==999,]$urban_delta <- "NA"
-df[df$sted_2019==999,]$urban_delta <- "NA"
 
 # Generate distance from parents
 df$cf20m398[is.na(df$cf20m398 )] <- 999
@@ -241,8 +228,6 @@ df[(df$cf20m398==999),]$dist_fr_parents <- "missing"
                'first_birth',
                'partner_dur',
                'marriage_dur',
-                'income_log',
-                'urban_delta',
                 'dist_fr_parents')  
   
   # Keeping data with variables selected
