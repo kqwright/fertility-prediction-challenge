@@ -55,7 +55,6 @@ clean_df <- function(df, background_df = NULL) {
   df[df$migration_background_bg==202,]$migration <- "gen_2_non_west"
 
   #Get education
-  df$oplcat_2020[is.na(df$oplcat_2020)] <- 999 
   df$education <- NA
   df[df$oplcat_2020==1 & !is.na(df$oplcat_2020),]$education <- "1_primary"
   df[df$oplcat_2020==2 & !is.na(df$oplcat_2020),]$education <- "2_sec_intermed"
@@ -63,7 +62,6 @@ clean_df <- function(df, background_df = NULL) {
   df[df$oplcat_2020==4 & !is.na(df$oplcat_2020),]$education <- "4_voc_intermed"
   df[df$oplcat_2020==5 & !is.na(df$oplcat_2020),]$education <- "5_voc_high"  
   df[df$oplcat_2020==6 & !is.na(df$oplcat_2020),]$education <- "6_uni"  
-  df[df$oplcat_2020==9 | is.na(df$oplcat_2020),]$education <- "other_missing"
   
   #Get education level
   df$oplcat_2020 [is.na(df$oplcat_2020)] <- 999 
